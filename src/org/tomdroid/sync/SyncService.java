@@ -129,6 +129,7 @@ public abstract class SyncService {
 	
 	protected abstract void getNotesForSync(boolean push);
 	public abstract boolean needsServer();
+	public abstract boolean needsLogin();
 	public abstract boolean needsLocation();
 	public abstract boolean needsAuth();
 	

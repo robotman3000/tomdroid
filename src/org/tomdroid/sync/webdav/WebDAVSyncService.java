@@ -22,34 +22,22 @@
  */
 package org.tomdroid.sync.webdav;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.tomdroid.Note;
 import org.tomdroid.NoteManager;
 import org.tomdroid.R;
-import org.tomdroid.sync.ServiceAuth;
 import org.tomdroid.sync.SyncService;
-import org.tomdroid.util.ErrorList;
 import org.tomdroid.util.Preferences;
 import org.tomdroid.util.TLog;
 import org.tomdroid.util.Time;
-import org.tomdroid.xml.XmlUtils;
 
 import android.app.Activity;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Handler;
-import android.os.Message;
 
-public class WebDAVSyncService extends SyncService implements ServiceAuth {
+public class WebDAVSyncService extends SyncService {
 
 	private static final String TAG = "WebDAVSyncService";
-	private String lastGUID;
+	// private String lastGUID;
 	private long latestRemoteRevision = -1;
 	private long latestLocalRevision = -1;
 
@@ -68,13 +56,12 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 	}
 
 	@Override
-	public boolean isConfigured() {
-		final OAuthConnection auth = this.getAuthConnection();
-		return auth.isAuthenticated();
-	}
-
-	@Override
 	public boolean needsServer() {
+		return true;
+	}
+	
+	@Override
+	public boolean needsLogin() {
 		return true;
 	}
 
@@ -85,85 +72,12 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 
 	@Override
 	public boolean needsAuth() {
-		final OAuthConnection auth = this.getAuthConnection();
-		return !auth.isAuthenticated();
-	}
-
-	@Override
-	public void getAuthUri(final String server, final Handler handler) {
-
-		this.execInThread(new Runnable() {
-
-			@Override
-			public void run() {
-
-				// Reset the authentication credentials
-				final OAuthConnection auth = new OAuthConnection();
-				Uri authUri = null;
-
-				try {
-					authUri = auth.getAuthorizationUrl(server);
-
-				} catch (final UnknownHostException e) {
-					TLog.e(WebDAVSyncService.TAG,
-							"Internet connection not available");
-					WebDAVSyncService.this.sendMessage(SyncService.NO_INTERNET);
-				}
-
-				final Message message = new Message();
-				message.obj = authUri;
-				handler.sendMessage(message);
-			}
-
-		});
-	}
-
-	@Override
-	public void remoteAuthComplete(final Uri uri, final Handler handler) {
-
-		this.execInThread(new Runnable() {
-
-			@Override
-			public void run() {
-
-				try {
-					// TODO: might be intelligent to show something like a
-					// progress dialog
-					// else the user might try to sync before the authorization
-					// process
-					// is complete
-					final OAuthConnection auth = WebDAVSyncService.this
-							.getAuthConnection();
-					final boolean result = auth.getAccess(uri
-							.getQueryParameter("oauth_verifier"));
-
-					if (result) {
-						TLog.i(WebDAVSyncService.TAG,
-								"The authorization process is complete.");
-						handler.sendEmptyMessage(SyncService.AUTH_COMPLETE);
-						return;
-						// sync(true);
-					} else {
-						TLog.e(WebDAVSyncService.TAG,
-								"Something went wrong during the authorization process.");
-						WebDAVSyncService.this
-						.sendMessage(SyncService.AUTH_FAILED);
-					}
-				} catch (final UnknownHostException e) {
-					TLog.e(WebDAVSyncService.TAG,
-							"Internet connection not available");
-					WebDAVSyncService.this.sendMessage(SyncService.NO_INTERNET);
-				}
-
-				// We don't care what we send, just remove the dialog
-				handler.sendEmptyMessage(0);
-			}
-		});
+		return false;
 	}
 
 	@Override
 	public boolean isSyncable() {
-		return super.isSyncable() && this.isConfigured();
+		return super.isSyncable();
 	}
 
 	@Override
@@ -172,40 +86,43 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 		
 		// start loading snowy notes
 		this.setSyncProgress(0);
-		this.lastGUID = null;
+		//this.lastGUID = null;
 
-		TLog.v(WebDAVSyncService.TAG, "Loading Snowy notes");
+		TLog.v(WebDAVSyncService.TAG, "Loading WebDAV notes");
 
-		final String userRef = Preferences
-				.getString(Preferences.Key.SYNC_SERVER_USER_API);
+		final String server = Preferences
+				.getString(Preferences.Key.SYNC_SERVER);
+		final String login = Preferences
+				.getString(Preferences.Key.SYNC_LOGIN);
+		final String password = Preferences
+				.getString(Preferences.Key.SYNC_PASSWORD);
 
 		this.syncInThread(new Runnable() {
 
 			@Override
 			public void run() {
 
-				final OAuthConnection auth = WebDAVSyncService.this
-						.getAuthConnection();
 				WebDAVSyncService.this.latestRemoteRevision = (int) Preferences
 						.getLong(Preferences.Key.LATEST_SYNC_REVISION);
 
 				try {
-					TLog.v(WebDAVSyncService.TAG, "contacting " + userRef);
-					String rawResponse = auth.get(userRef);
+					TLog.v(WebDAVSyncService.TAG, "contacting " + server);
+					
+					// String rawResponse = auth.get(userRef);
 					if (WebDAVSyncService.this.cancelled) {
 						WebDAVSyncService.this.doCancel();
 						return;
 					}
-					if (rawResponse == null) {
+					/*if (rawResponse == null) {
 						WebDAVSyncService.this
 						.sendMessage(SyncService.CONNECTING_FAILED);
 						WebDAVSyncService.this.setSyncProgress(100);
 						return;
-					}
+					}*/
 
 					WebDAVSyncService.this.setSyncProgress(30);
 
-					try {
+					/*try {
 						JSONObject response = new JSONObject(rawResponse);
 
 						// get notes list without content, to check for revision
@@ -318,10 +235,11 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 										rawResponse));
 						WebDAVSyncService.this.setSyncProgress(100);
 						return;
-					}
-				} catch (final java.net.UnknownHostException e) {
+					}*/
+				// } catch (final java.net.UnknownHostException e) {
+				} catch (final Exception ex) {
 					TLog.e(WebDAVSyncService.TAG,
-							"Internet connection not available");
+							"Exception occured: " + ex.getMessage());
 					WebDAVSyncService.this.sendMessage(SyncService.NO_INTERNET);
 					WebDAVSyncService.this.setSyncProgress(100);
 					return;
@@ -356,35 +274,6 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 		}
 	}
 
-	private OAuthConnection getAuthConnection() {
-
-		// TODO: there needs to be a way to reset these values, otherwise cannot
-		// change server!
-
-		final OAuthConnection auth = new OAuthConnection();
-
-		auth.accessToken = Preferences.getString(Preferences.Key.ACCESS_TOKEN);
-		auth.accessTokenSecret = Preferences
-				.getString(Preferences.Key.ACCESS_TOKEN_SECRET);
-		auth.requestToken = Preferences
-				.getString(Preferences.Key.REQUEST_TOKEN);
-		auth.requestTokenSecret = Preferences
-				.getString(Preferences.Key.REQUEST_TOKEN_SECRET);
-		auth.oauth10a = Preferences.getBoolean(Preferences.Key.OAUTH_10A);
-		auth.authorizeUrl = Preferences
-				.getString(Preferences.Key.AUTHORIZE_URL);
-		auth.accessTokenUrl = Preferences
-				.getString(Preferences.Key.ACCESS_TOKEN_URL);
-		auth.requestTokenUrl = Preferences
-				.getString(Preferences.Key.REQUEST_TOKEN_URL);
-		auth.rootApi = Preferences
-				.getString(Preferences.Key.SYNC_SERVER_ROOT_API);
-		auth.userApi = Preferences
-				.getString(Preferences.Key.SYNC_SERVER_USER_API);
-
-		return auth;
-	}
-
 	// push syncable notes
 	@Override
 	public void pushNotes(final ArrayList<Note> notes) {
@@ -395,8 +284,12 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 			this.doCancel();
 			return;
 		}
-		final String userRef = Preferences
-				.getString(Preferences.Key.SYNC_SERVER_USER_API);
+		final String server = Preferences
+				.getString(Preferences.Key.SYNC_SERVER);
+		final String login = Preferences
+				.getString(Preferences.Key.SYNC_LOGIN);
+		final String password = Preferences
+				.getString(Preferences.Key.SYNC_PASSWORD);
 		
 		final long newRevision = Preferences
 				.getLong(Preferences.Key.LATEST_SYNC_REVISION) + 1;
@@ -404,18 +297,16 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 		this.syncInThread(new Runnable() {
 			@Override
 			public void run() {
-				final OAuthConnection auth = WebDAVSyncService.this
-						.getAuthConnection();
 				try {
 					TLog.v(WebDAVSyncService.TAG,
 							"pushing {0} notes to remote service, sending rev #{1}",
 							notes.size(), newRevision);
-					final String rawResponse = auth.get(userRef);
+					
 					if (WebDAVSyncService.this.cancelled) {
 						WebDAVSyncService.this.doCancel();
 						return;
 					}
-					try {
+					/*try {
 						TLog.v(WebDAVSyncService.TAG, "creating JSON");
 
 						final JSONObject data = new JSONObject();
@@ -453,7 +344,7 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 								"notes-ref").getString("api-ref");
 
 						TLog.v(WebDAVSyncService.TAG, "put url: {0}", notesUrl);
-						
+					
 						if (WebDAVSyncService.this.cancelled) {
 							WebDAVSyncService.this.doCancel();
 							return;
@@ -474,18 +365,30 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 								SyncService.LATEST_REVISION,
 								(int) WebDAVSyncService.this.latestRemoteRevision,
 								0);
+						*/
 
-					} catch (final JSONException e) {
+					/*} catch (final JSONException e) {
 						TLog.e(WebDAVSyncService.TAG, e,
 								"Problem parsing the server response");
 						WebDAVSyncService.this.sendMessage(
 								SyncService.NOTE_PUSH_ERROR, ErrorList
 								.createErrorWithContents(
 										"JSON parsing", "json", e,
-										rawResponse));
+										""));
 						return;
 					}
-				} catch (final java.net.UnknownHostException e) {
+					catch (final Exception e) {
+						TLog.e(WebDAVSyncService.TAG, e,
+								"Problem parsing the server response");
+						WebDAVSyncService.this.sendMessage(
+								SyncService.NOTE_PUSH_ERROR, ErrorList
+								.createErrorWithContents(
+										"JSON parsing", "json", e,
+										""));
+						return;
+					}*/
+				//} catch (final java.net.UnknownHostException e) {
+				} catch (final Exception e) {
 					TLog.e(WebDAVSyncService.TAG,
 							"Internet connection not available");
 					WebDAVSyncService.this.sendMessage(SyncService.NO_INTERNET);
@@ -504,23 +407,25 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 		// start loading snowy notes
 
 		TLog.v(WebDAVSyncService.TAG, "pulling remote note");
-
-		final String userRef = Preferences
-				.getString(Preferences.Key.SYNC_SERVER_USER_API);
+		
+		final String server = Preferences
+				.getString(Preferences.Key.SYNC_SERVER);
+		final String login = Preferences
+				.getString(Preferences.Key.SYNC_LOGIN);
+		final String password = Preferences
+				.getString(Preferences.Key.SYNC_PASSWORD);
 
 		this.syncInThread(new Runnable() {
 
 			@Override
 			public void run() {
 
-				final OAuthConnection auth = WebDAVSyncService.this
-						.getAuthConnection();
-
+				
 				try {
-					TLog.v(WebDAVSyncService.TAG, "contacting " + userRef);
-					String rawResponse = auth.get(userRef);
+					TLog.v(WebDAVSyncService.TAG, "contacting " + server);
+					//String rawResponse = auth.get(userRef);
 
-					try {
+					/*try {
 						JSONObject response = new JSONObject(rawResponse);
 						final String notesUrl = response.getJSONObject(
 								"notes-ref").getString("api-ref");
@@ -547,7 +452,6 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 						TLog.v(WebDAVSyncService.TAG, "parsing remote note");
 
 						WebDAVSyncService.this.insertNote(new Note(jsonNote));
-
 					} catch (final JSONException e) {
 						TLog.e(WebDAVSyncService.TAG, e,
 								"Problem parsing the server response");
@@ -555,11 +459,12 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 								SyncService.NOTE_PULL_ERROR, ErrorList
 								.createErrorWithContents(
 										"JSON parsing", "json", e,
-										rawResponse));
+										""));
 						return;
-					}
+					}*/
 
-				} catch (final java.net.UnknownHostException e) {
+				// } catch (final java.net.UnknownHostException e) {
+				} catch (final Exception e) {
 					TLog.e(WebDAVSyncService.TAG,
 							"Internet connection not available");
 					WebDAVSyncService.this.sendMessage(SyncService.NO_INTERNET);
@@ -574,10 +479,14 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 	@Override
 	public void deleteAllNotes() {
 
-		TLog.v(WebDAVSyncService.TAG, "Deleting Snowy notes");
-
-		final String userRef = Preferences
-				.getString(Preferences.Key.SYNC_SERVER_USER_API);
+		TLog.v(WebDAVSyncService.TAG, "Deleting WEBDAV notes");
+		
+		final String server = Preferences
+				.getString(Preferences.Key.SYNC_SERVER);
+		final String login = Preferences
+				.getString(Preferences.Key.SYNC_LOGIN);
+		final String password = Preferences
+				.getString(Preferences.Key.SYNC_PASSWORD);
 		
 		final long newRevision;
 		
@@ -592,16 +501,10 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 			@Override
 			public void run() {
 
-				final OAuthConnection auth = WebDAVSyncService.this
-						.getAuthConnection();
 
 				try {
-					TLog.v(WebDAVSyncService.TAG, "contacting " + userRef);
-					final String rawResponse = auth.get(userRef);
-					if (rawResponse == null) {
-						return;
-					}
-					try {
+					TLog.v(WebDAVSyncService.TAG, "contacting " + server);
+					/*try {
 						JSONObject response = new JSONObject(rawResponse);
 						final String notesUrl = response.getJSONObject(
 								"notes-ref").getString("api-ref");
@@ -661,8 +564,9 @@ public class WebDAVSyncService extends SyncService implements ServiceAuth {
 										rawResponse));
 						WebDAVSyncService.this.setSyncProgress(100);
 						return;
-					}
-				} catch (final java.net.UnknownHostException e) {
+					}*/
+				// } catch (final java.net.UnknownHostException e) {
+				} catch (final Exception e) {
 					TLog.e(WebDAVSyncService.TAG,
 							"Internet connection not available");
 					WebDAVSyncService.this.sendMessage(SyncService.NO_INTERNET);

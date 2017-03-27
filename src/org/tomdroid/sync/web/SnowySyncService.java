@@ -76,6 +76,11 @@ public class SnowySyncService extends SyncService implements ServiceAuth {
 	public boolean needsServer() {
 		return true;
 	}
+	
+	@Override
+	public boolean needsLogin() {
+		return false;
+	}
 
 	@Override
 	public boolean needsLocation() {

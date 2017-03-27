@@ -79,6 +79,8 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 	private EditTextPreference baseSize = null;
 	private ListPreference defaultSort = null;
 	private EditTextPreference syncServer = null;
+	private EditTextPreference syncLogin = null;
+	private EditTextPreference syncPassword = null;
 	private ListPreference syncService = null;
 	private EditTextPreference sdLocation = null;
 	private Preference delNotes = null;
@@ -114,6 +116,8 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 		baseSize = (EditTextPreference)findPreference(Preferences.Key.BASE_TEXT_SIZE.getName());
 		defaultSort = (ListPreference)findPreference(Preferences.Key.SORT_ORDER.getName());
 		syncServer = (EditTextPreference)findPreference(Preferences.Key.SYNC_SERVER.getName());
+		syncLogin = (EditTextPreference)findPreference(Preferences.Key.SYNC_LOGIN.getName());
+		syncPassword = (EditTextPreference)findPreference(Preferences.Key.SYNC_PASSWORD.getName());
 		syncService = (ListPreference)findPreference(Preferences.Key.SYNC_SERVICE.getName());
 		sdLocation = (EditTextPreference)findPreference(Preferences.Key.SD_LOCATION.getName());
 		clearSearchHistory = (Preference)findPreference(Preferences.Key.CLEAR_SEARCH_HISTORY.getName());
@@ -133,6 +137,7 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 		
 		// Enable or disable the server field depending on the selected sync service
 		setServer(syncService.getValue());
+		setServerLogin(syncService.getValue());
 		
 		syncService.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			
@@ -149,7 +154,7 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 			}
 		});
  		
-		// force reauthentication if the sync server changes
+		// check login/password if the sync server changes
 		syncServer.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
 			public boolean onPreferenceChange(Preference preference,
@@ -167,6 +172,34 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 				return retval;
 			}
 			
+		});
+		
+		syncLogin.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+			public boolean onPreferenceChange(Preference preference,
+					Object login) {
+				String newLogin = login.toString();
+				syncLogin.setSummary(newLogin);
+				//reauthenticateWithWebDAV();
+				return true;
+			}
+			
+		});
+		
+		// force WEBDAV reauthentication if the password changes
+		syncPassword.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+			public boolean onPreferenceChange(Preference preference,
+							Object password) {
+				String newPassword = password.toString();
+				
+				syncPassword.setSummary(newPassword);
+				//String asterix = getPasswordAsAsterixString(newPassword);
+				//syncPassword.setSummary(asterix);
+				//reauthenticateWithWebDAV();
+				return true;
+			}
+					
 		});
 		
 		// Change the Folder Location
@@ -329,6 +362,18 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 		if(syncServer.getText() == null)
 			syncServer.setText(defaultServer);
 		syncServer.setSummary(Preferences.getString(Preferences.Key.SYNC_SERVER));
+		
+		String defaultLogin = (String)Preferences.Key.SYNC_LOGIN.getDefault();
+		syncLogin.setDefaultValue(defaultLogin);
+		if(syncLogin.getText() == null)
+			syncLogin.setText(defaultLogin);
+		syncLogin.setSummary(Preferences.getString(Preferences.Key.SYNC_LOGIN));
+		
+		String defaultPassword = (String)Preferences.Key.SYNC_PASSWORD.getDefault();
+		syncPassword.setDefaultValue(defaultPassword);
+		if(syncPassword.getText() == null)
+			syncPassword.setText(defaultPassword);
+		syncPassword.setSummary(Preferences.getString(Preferences.Key.SYNC_PASSWORD));
 
 		String defaultService = (String)Preferences.Key.SYNC_SERVICE.getDefault();
 		syncService.setDefaultValue(defaultService);
@@ -371,6 +416,18 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 		autoBackup.setEnabled(!service.needsLocation()); // if not using sd card, allow backup
 		sdLocation.setSummary(Tomdroid.NOTES_PATH);
 	}
+	
+	private void setServerLogin(String syncServiceKey) {
+
+		SyncManager.getInstance();
+		SyncService service = SyncManager.getService(syncServiceKey);
+
+		if (service == null)
+			return;
+
+		syncLogin.setEnabled(service.needsLogin());
+		syncPassword.setEnabled(service.needsLogin());
+	}
 		
 	private void folderNotExisting(String path) {
 		dialogString = String.format(getString(R.string.prefFolderCreated), path);
@@ -409,6 +466,7 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 	private void syncServiceChanged(String syncServiceKey) {
 		
 		setServer(syncServiceKey);
+		setServerLogin(syncServiceKey);
 		
 		// TODO this should be refactored further, notice that setServer performs the same operations 
 		
@@ -568,4 +626,20 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 		    }
 	    return dialog;
 	}
+	
+	@SuppressWarnings("unused")
+	/***
+	 * do not show clear text in summary
+	 */
+	private String getPasswordAsAsterixString(final String newPassword) {
+		int len = newPassword.length();
+		StringBuilder builder = new StringBuilder(len);
+		for(int i = 0; i < len; i++){
+			builder.append('*');
+		}
+		
+		String asterix = builder.toString();
+		return asterix;
+	}
+	
 }

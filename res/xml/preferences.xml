@@ -51,6 +51,14 @@
 				android:title="@string/prefSyncServer"
 				android:shouldDisableView="true"
 				android:singleLine="true"/>
+		<EditTextPreference android:key="sync_login"
+				android:title="@string/prefSyncLogin"
+				android:shouldDisableView="true"
+				android:singleLine="true"/>
+		 <EditTextPreference android:key="sync_password"
+				android:title="@string/prefSyncPassword"
+				android:shouldDisableView="true"
+				android:singleLine="true"/>
 		<EditTextPreference android:key="sd_location"
 				android:title="@string/prefLocation"
 				android:positiveButtonText="@string/btnOk"
