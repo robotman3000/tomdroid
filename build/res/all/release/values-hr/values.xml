@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/home/enims/Applications/AndroidStudio/tomdroid/res/values-hr/strings.xml -->
+    <string-array name="firstNoteContent">
+        <item>Dobrodošli u Tomdroid!\n</item>
+        <item>Još nemate bilješki. Za početak namjestite postavke usklađivanja pod Postavkama. Dva načina usklađivanja su opisani ispod.\n</item>
+        <item>=Mrežno usklađivanje=</item>
+        <!-- =text= makes <size:large>text</size:large> -->
+        <item>Mrežno usklađivanje koristite za sinkronizaciju s Tomboy-Online, vlastiti Rainy/Snowy server ili neki drugi server koji podržava Tomboy Web REST API.\n</item>
+        <item>Za korištenje, postavite Sinkronizacijski servis na mrežno usklađivanje u Postavkama te zatim unesite URL servera. Nekoliko javnih primjera:</item>
+        <!-- -text is for list-items. -->
+        <item>-Tomboy Online - https://edge.tomboy-online.org/</item>
+        <!-- -text is for list-items. -->
+        <item>-rainy.notesync.org - https://notesync.org:8080/[username]/[password]/\n</item>
+        <item>Jednom postavljeno, odaberite sinkronizacijski logo u traci na vrhu za usklađivanje.\n</item>
+        <item>Napomena:poželjno je napraviti sigurnosnu kopiju prije sinkronizacije, ova aplikacija je i dalje u razvoju te može oštetiti Tomboy bilješke.\n</item>
+        <item>Pogledajte http://live.gnome.org/Tomboy/Directories za lokaciju *.note datoteka na svim platformama.\n</item>
+        <!-- =text= makes <size:large>text</size:large> -->
+        <item>=SD kartica=</item>
+        <item>Postavite Tomboy bilješke (*.note) na SD karticu pod tomdroid/. Nakon kopiranja bilješki, postavite Sinkronizacijski servis na SD karticu pod Postavkama i zatim učinite usklađivanje odabirom ikone u gornjoj traci.\n</item>
+        <item>Također, Tomdroid uvijek traži nove suradnike. Ako ste zainteresirani za posao, pridružite se tomdroid-dev timu na  Launchpad: http://launchpad.net/~tomdroid-dev.\n</item>
+        <item>Na kraju ako susretnete problem ili grešku, molimo javite na: https://bugs.launchpad.net/tomdroid</item>
+    </string-array>
+
+    <string name="NewNoteBodyHint">Unesite bilješku ovdje</string>
+    <string name="NewNoteTitle">Nova bilješka</string>
+    <string name="NewNoteTitleHint">Unesite naziv ovdje</string>
+    <string name="SearchResultTitle">Rezultati pretraživanja:</string>
+    <string name="about_translators">Launchpad Contributions:
+  Paolo Pelesk https://launchpad.net/~teddx</string>
+    <string name="allNotebooksFilter">Sve bilježnice</string>
+    <string name="app_desc">Tomboy compatible wikiwiki note-taking app.</string>
+    <string name="app_name">Tomdroid</string>
+    <string name="author">Olivier Bilodeau</string>
+    <string name="autoBackupPref">Kopiraj lokalne bilješke na SD karticu pri pohranjivanju</string>
+    <string name="autoBackupPrefTitle">Automatska sigurnosna kopija</string>
+    <string name="back">Natrag</string>
+    <string name="backupPref">Kopiraj sve lokalne bilješke na SD karticu</string>
+    <string name="backupPrefTitle">Sigurnosna kopija bilješki</string>
+    <string name="backup_notes">Kopiraj sve lokalne bilješke na SD karticu? Može prebrisati postojeće bilješke na SD kartici.</string>
+    <string name="backup_notes_title">Sigurnosno pohrani bilješke?</string>
+    <string name="bold">B</string>
+    <string name="btnCancel">Otkaži</string>
+    <string name="btnCancelImport">Otkaži\nUvoz</string>
+    <string name="btnClose">Zatvori</string>
+    <string name="btnOk">U redu</string>
+    <string name="btnProjectPage">Projektna stranica</string>
+    <string name="btnRemoveShortcut">Ukloni prečac</string>
+    <string name="btnSavetoSD">Spremi</string>
+    <string name="btnSendAsFile">Kao datoteku</string>
+    <string name="btnSendAsText">Kao tekst</string>
+    <string name="cancel">Otkaži</string>
+    <string name="chooseFile">Odaberite datoteku koje je ili Tomboy bilješka (koja će biti uvezena) ili običan tekst (što će stvoriti novu bilješku):</string>
+    <string name="clearSearchHistory">Ukloni sva pretraživanja izvedena</string>
+    <string name="clearSearchHistoryTitle">Očiti povijest pretraživanja</string>
+    <string name="close">Zatvori</string>
+    <string name="compare_title">Tomdroid - Konflikt bilješke</string>
+    <string name="contextRevert">Povrati</string>
+    <string name="copy">Stvori\nKopiju</string>
+    <string name="createShortcut">Stvori prečac</string>
+    <string name="delete">Izbriši</string>
+    <string name="deleteAllNotes">Očisti sve bilješke iz lokalne baze</string>
+    <string name="deleteAllNotesTitle">Počisti bilješke</string>
+    <string name="deleteRemoteNotes">Obriši sve bilješke s poslužitelja</string>
+    <string name="deleteRemoteNotesTitle">Obriši udaljene bilješke</string>
+    <string name="delete_all">Počisti bilješke</string>
+    <string name="delete_all_message">Sigurno želite počistiti bazu bilješki?</string>
+    <string name="delete_message">Sigurno želite obrisati ovu bilješku?</string>
+    <string name="delete_note">Obriši bilješku</string>
+    <string name="delete_remote">Obriši\nUdaljenu</string>
+    <string name="delete_remote_notes">Obriši udaljene bilješke</string>
+    <string name="delete_remote_notes_message">Sigurno želite obrisati sve bilješke na servisu?</string>
+    <string name="deleted">Obrisano</string>
+    <string name="deletedSearchHistory">Povijest pretrage izbrisana.</string>
+    <string name="diff_content">-- razlike sadržaja --</string>
+    <string name="diff_label">Razlika između datotekama</string>
+    <string name="diff_titles">-- naziv razlike --</string>
+    <string name="discard">Odbaci</string>
+    <string name="edit">Uredi</string>
+    <string name="editTags">Uredi oznake</string>
+    <string name="edit_tags">Uredite oznake, razdvajajući iz zarezima.</string>
+    <string name="edit_title">Tomdroid - Uredi bilješku</string>
+    <string name="error">Greška</string>
+    <string name="filePickerTitle">Tomdroid - Uvoz bilješke</string>
+    <string name="firstNoteTitle">Tomdroid-ova prva bilješka</string>
+    <string name="gettings_notes">Dohvaćanje popisa udaljenih bilješki...</string>
+    <string name="gt"><b>></b></string>
+    <string name="highlight">označi</string>
+    <string name="huge">Ogromna</string>
+    <string name="illegalTextSize">Zabranjena veličina teksta odabrana. Odaberite broj.</string>
+    <string name="italic">i</string>
+    <string name="large">Velika</string>
+    <string name="line_x">Linija %1$s:</string>
+    <string name="local_label">Lokalna verzija</string>
+    <string name="lt"><b>&lt;</b></string>
+    <string name="market_description">A Tomboy client for Android. Tomboy is a desktop note-taking app using a wikiwiki approach and a simple user interface.\n\n* Note format compatibility with Tomboy\n* Online note synchronization with Rainy, Snowy or Tomboy Online\n* SD Card importation\n* Home screen shortcuts\n* Send and receive text or note-files from any app\n* Open source!</string>
+    <string name="market_promotext">Aplikacija za zapisivanje bilješki s mrežnim usklađivanjem kompatibilna s Tomboy</string>
+    <string name="market_recent_changes">* Notes can now be created, edited and deleted\n* Completely redesigned for both tablets and phones\n* Sync your notes with compatible web-services or to your SD card\n* Send and receive note files or text from any app\n* More configurable than before\n* Available in even more languages\n\n And much more, for a complete list of changes please see https://launchpad.net/tomdroid/+announcements</string>
+    <string name="market_title">Tomdroid bilješke</string>
+    <string name="menuAbout">O</string>
+    <string name="menuFilterNotebook">Filter</string>
+    <string name="menuImport">Uvezi bilješke</string>
+    <string name="menuNew">Nova</string>
+    <string name="menuPrefs">Postavke</string>
+    <string name="menuRevert">Povrati sve</string>
+    <string name="menuSearch">Pretraživanje</string>
+    <string name="menuSync">Sinhroniziraj</string>
+    <string name="messageAuthComplete">Autorizacija s %1$s uspješna.</string>
+    <string name="messageAuthFailed">Autorizacija s %1$s neuspjela. Pokušajte ponovo kasnije</string>
+    <string name="messageCouldNotSave">Ne mogu spremiti bilješku.</string>
+    <string name="messageDatabaseReset">Bilješke uspješno počišćene.</string>
+    <string name="messageDiscardChanges">Sigurno želite dobaciti postavke i vratiti bilješku na prijašnju verziju?</string>
+    <string name="messageErrorNoteParsing">Greška analize bilješke.</string>
+    <string name="messageErrorParsingXML">Greška pri analizi bilješke. Provjerite XML.</string>
+    <string name="messageFileNotReadable">Ne mogu čitati datoteku bilješke.</string>
+    <string name="messageFileTooBig">Datoteka prelazi maksimalnu uvoznu veličinu - da li ste sigurni da je čisti tekst?</string>
+    <string name="messageNoSDCard">SDCard pohrana nije pronađena.</string>
+    <string name="messageNoteDeleted">Bilješka uklonjena lokalno</string>
+    <string name="messageNoteNotFound">Zatražena bilješka nije pronađena. Možda je izbrisana ili uklonjena kroz sinkronizaciju.</string>
+    <string name="messageNoteSaved">Bilješka pohranjena lokalno</string>
+    <string name="messageNotesBackedUp">Bilješke uspješno pohranjene na SD karticu.</string>
+    <string name="messageNotesRestored">Bilješke uspješno vraćene s SD kratice.</string>
+    <string name="messageRemoteNotesDeleted">Bilješka uspješno izbrisana iz %1$s.</string>
+    <string name="messageSelectSize">Odaberi veličinu teksta</string>
+    <string name="messageSyncAlreadyInProgress">Sinkronizacija u tijeku</string>
+    <string name="messageSyncCancelled">Sinkronizacija s %1$s otkazana.</string>
+    <string name="messageSyncComplete">Sinkronizacija s %1$s dovršena.</string>
+    <string name="messageSyncConnectingFailed">Greška spajanja na %1$s. Trebate ovjeriti u "postavkama".</string>
+    <string name="messageSyncError">Greška pri analizi kolekcije bilješki. Ako možete replicirati problem, molimo kontaktirajte nas!</string>
+    <string name="messageSyncNoConnection">Niste spojeni na internet.</string>
+    <string name="messageSyncNoNote">Nema bilješki na  %1$s.</string>
+    <string name="messageSyncNoteDeleteError">Greška brisanja bilješke iz %1$s.</string>
+    <string name="messageSyncNoteDeleted">Bilješka uspješno uklonjena iz %1$s.</string>
+    <string name="messageSyncNotePullError">Greška primanja bilješke od %1$s.</string>
+    <string name="messageSyncNotePulled">Bilješka uspješno primljena od %1$s.</string>
+    <string name="messageSyncNotePushError">Greška slanja bilješke na %1$s.</string>
+    <string name="messageSyncNotePushed">Bilješka uspješno poslana na %1$s.</string>
+    <string name="messageSyncParseFailed">Greška analize odgovora od %1$s.</string>
+    <string name="mono">jedan razmak</string>
+    <string name="no">Ne</string>
+    <string name="noFiles">Nema datoteka ili mapa</string>
+    <string name="normal">Normalan</string>
+    <string name="noteOptions">Opcije bilješke</string>
+    <string name="note_x_tags">Oznake bilješke \'%1$s\'</string>
+    <string name="old">%1$s (staro)</string>
+    <string name="overwrite_local">Prebrisati\nLokalnu</string>
+    <string name="overwrite_remote">Prebrisati\nUdaljenu</string>
+    <string name="prefAuthenticate">Ovjeriti</string>
+    <string name="prefAutoSave">Automatski spremi bilješku pri zatvaranju uređivača.</string>
+    <string name="prefBaseSize">Temeljna veličina fonta</string>
+    <string name="prefDefaultSortingTitle">Zadana metoda sortiranja</string>
+    <string name="prefDeletedNotes">Ako označeno, prikazati će obrisane bilješke na popisu.</string>
+    <string name="prefDeletedNotesTitle">Prikaži obrisane bilješke</string>
+    <string name="prefDescSyncOnStart">Sinkronizira bilješke pri pokretanju</string>
+    <string name="prefDisplay">Postavke prikaza</string>
+    <string name="prefFolderCreated">Mapa \"%1$s\" još ne postoji. Molim spojite uređaj na računalo, stvorite mapu i ubacite *.note datoteke.</string>
+    <string name="prefLinkAddresses">Poveži adrese na aplikaciju za karte</string>
+    <string name="prefLinkAddressesTitle">Poveži adrese karti</string>
+    <string name="prefLinkEmails">npr. ime@adresa.com</string>
+    <string name="prefLinkEmailsTitle">Poveži elektroničku poštu</string>
+    <string name="prefLinkPhones">Poveži telefonske brojeve na mobilnu aplikaciju</string>
+    <string name="prefLinkPhonesTitle">Poveži telefonske brojeve</string>
+    <string name="prefLinkTitles">Poveži na ostale naslove bilješki</string>
+    <string name="prefLinkTitlesTitle">Naslov veze</string>
+    <string name="prefLinkUrls">npr. "www.google.com"</string>
+    <string name="prefLinkUrlsTitle">Poveži web adrese"</string>
+    <string name="prefLinks">Postavke hiperlinka</string>
+    <string name="prefLocation">Lokacija na SD kartici</string>
+    <string name="prefNoValidEntry">\"%1$s\" nije valjan upis. Pokušajte ponovo!</string>
+    <string name="prefNoValidLocation">\"%1$s\" nije valjano odredište. Pokušajte ponovo!</string>
+    <string name="prefNoteTemplates">Ako označeno, prikazati će predloške na popisu.</string>
+    <string name="prefNoteTemplatesTitle">Prikaži predložak bilješke</string>
+    <string name="prefSDCard">SD kartica</string>
+    <string name="prefServerEmpty">Adresa poslužitelja promijenjena ali nova vrijednost je prazna</string>
+    <string name="prefSortDate">Datum izmjene</string>
+    <string name="prefSortTitle">Naslov bilješke</string>
+    <string name="prefSorting">Sortiraj po:</string>
+    <string name="prefSync">Sinkronizacija</string>
+    <string name="prefSyncCompleteAuth">Dovršetak ovjere. Pričekajte...</string>
+    <string name="prefSyncConnectionFailed">Neuspjelo spajanje na poslužitelj, provjerite unesenu adresu.</string>
+    <string name="prefSyncOnStart">Automatska sinkronizacija pri pokretanju</string>
+    <string name="prefSyncServer">Poslužitelj</string>
+    <string name="prefSyncService">Servis</string>
+    <string name="prefTomboyWeb">Mrežna sinkronizacija</string>
+    <string name="prefTools">Alati</string>
+    <string name="pref_title">Tomdroid - Postavke</string>
+    <string name="remote_label">Udaljena verzija</string>
+    <string name="restorePrefTitle">Povrati bilješke</string>
+    <string name="restore_notes">Povuci sve bilješke za SD kartice? Može prebrisati postojeće bilješke?</string>
+    <string name="restore_notes_title">Obnovi bilješke?</string>
+    <string name="revert_note">Povrati bilješku</string>
+    <string name="revert_note_message">Ovo će povratiti lokalnu bilješku na verziju koja je na poslužitelju. Sigurno želite to učiniti?</string>
+    <string name="revert_notes">Povrati bilješke</string>
+    <string name="revert_notes_message">Ovo će povratiti lokalne bilješke na verzije koje su na poslužitelju. Sigurno želite to učiniti?</string>
+    <string name="save">Spremi</string>
+    <string name="search_description">Tekst u bilješkama</string>
+    <string name="search_hint">Pretraži bilješke</string>
+    <string name="search_title">Tomdroid - Rezultati pretraživanja</string>
+    <string name="send">Pošalji</string>
+    <string name="sendChoice">Kako želite poslati bilješke?</string>
+    <string name="sendChoiceTitle">Odabir metode slanja.</string>
+    <string name="shortcut_menu_item_caption">Tomdroid bilješka</string>
+    <string name="shortcut_title">Tomdroid - Prečaci</string>
+    <string name="shortcuts_view_caption">Odaberi bilješku</string>
+    <string name="size">veličina</string>
+    <string name="small">Malo</string>
+    <string name="sortByDate">Sortiraj po datumu</string>
+    <string name="sortByTitle">Sortiraj po nazivu</string>
+    <string name="strAbout">%1$s\n\nAutor: %2$s\nVerzija: %3$s\nLicencirano pod GPLv3</string>
+    <string name="strListEmptyNoNotebooks">Nema bilježnica u bazi podataka.</string>
+    <string name="strListEmptyNoNotes">Nema bilješki u Tomdroid bazi podataka.</string>
+    <string name="strListEmptyWaiting">Molimo pričekajte dok se bilješke učitaju...</string>
+    <string name="strNoResults">Nema bilješki sa \"%s\"</string>
+    <string name="strWait">Molim pričekajte...</string>
+    <string name="strWelcome">Dobrodošli u Tomdroid.\n\nMolimo pripazite da je program i dalje u beta fazi te sadrži poznate probleme.\n\nU potpunosti smo svjesni tih problema i namjeravamo raditi na njima brzo ali sam htio objaviti što prije u cilju testiranja.\n\nAko želite doprinijeti razvoju, pomoć se cijeni na svim razinama. Posjetite launchpad.net/tomdroid i javite nam se!\n</string>
+    <string name="strike"><strike>S</strike></string>
+    <string name="sync_conflict_deleted">Lokalna verzija je već obrisana. Odaberite radnju ispod.</string>
+    <string name="sync_conflict_description">Konflikt pri sinkronizaciji bilješke \'%1$s\'</string>
+    <string name="sync_conflict_import_message">Bilješka već postoji. Odaberite radnju za rješavanje problema. Možete urediti bilješke prije odabira ili pregledati razlike odabirom oznake ispod.</string>
+    <string name="sync_conflict_message">Odaberite radnju za rješavanje konflikta. Možete urediti bilješku prije odabira ili pregledati razlike odabirom oznake ispod.</string>
+    <string name="sync_conflict_titles_message">Bilješka pod tim nazivom već postoji u bazi podataka. Odaberite akciju za rješavanje konflikta. Možete urediti bilješku prije odabira ili pregledati razlike odabirom oznake ispod.</string>
+    <string name="syncing">Sinkronizacija s %1$s</string>
+    <string name="syncing_connect">spajanje na uslugu...</string>
+    <string name="syncing_local">nadogradnja lokalnih bilješki...</string>
+    <string name="syncing_remote">nadogradnja udaljenih bilješki...</string>
+    <string name="textModified">Promijenjeno:</string>
+    <string name="textToday">Danas</string>
+    <string name="textYexterday">Jučer</string>
+    <string name="titleAbout">O Tomdroidu-u</string>
+    <string name="titleDefaultSorting">Odabir zadane metode sortiranja</string>
+    <string name="titleDiscardChanges">Odbaciti izmjene?</string>
+    <string name="titleErrorParsingXML">Greška analize bilješke</string>
+    <string name="titleNoteNotFound">Nema bilješke</string>
+    <string name="titleSyncService">Odabir servisa za sinkronizaciju</string>
+    <string name="titleWelcome">Upozorenje</string>
+    <string name="undelete">Poništi brisanje bilješke</string>
+    <string name="view">Pregled</string>
+    <string name="view_title">Tomdroid - pregled bilješke</string>
+    <string name="yes">Da</string>
+
+</resources>

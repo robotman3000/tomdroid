@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/home/enims/Applications/AndroidStudio/tomdroid/res/values-da/strings.xml -->
+    <string-array name="firstNoteContent">
+        <item>Velkommen til Tomdroid!\n</item>
+        <item>Du har ingen noter her endnu. For at komme i gang skal du indstille dine synkronisering præferencer under Indstillinger. Der er to synkroniseringsindstillinger beskrevet nedenfor.\n</item>
+        <item>=Online synkronisering=</item>
+        <!-- =text= makes <size:large>text</size:large> -->
+        <item>Online Synkronisering er, hvad du leder efter, hvis du ønsker at synkronisere til Tomboy-Online, din egen Rainy/Snowy server eller anden server, der understøtter Tomboy Web REST API. \n</item>
+        <item>For at bruge den, skal du indstille synkroniseringsmetode til Online Synkronisering i præferencerne og derefter indtaste en Server URL. Her er nogle af de offentlige muligheder:</item>
+        <!-- -text is for list-items. -->
+        <item>-Tomboy Online - https://edge.tomboy-online.org/</item>
+        <!-- -text is for list-items. -->
+        <item>-rainy.notesync.org - https://notesync.org:8080/[username]/[password]/\n</item>
+        <item>Når de er indstillet, klik på Sync logoet i Tomdroid\'s top bar for at synkronisere dine noter.\n</item>
+        <item>Bemærk: Du kunne måske ønske at sikkerhedskopiere dine Tomboy noter inden synkronisering, da denne app stadig er under udvikling, og kan beskadige dine Tomboy noter.\n</item>
+        <item>Se venligst http://live.gnome.org/Tomboy/Directories for placeringen af *.note filerne for alle platforme.\n</item>
+        <!-- =text= makes <size:large>text</size:large> -->
+        <item>=SD kort=</item>
+        <item>Kom dine Tomboy noter (*.note) på dit SD kort under tomdroid/. Når noterne er kopierede, sæt da Sync Service til SD kort under indstilliger. Tryk derefter på Synkroniser logoet i Tomdroids top bar.\n</item>
+        <item>Tomdroid søger altid nye biddragsydere. Hvis du er interesseret, tilslut dig da tomdroids udviklingsteam på Launchpad: http://launchpad.net/~tomdroid-dev.\n</item>
+        <item>Endeligt, hvis du oplever problemer, være venlig at rapportere dem her: https://bugs.launchpad.net/tomdroid</item>
+    </string-array>
+
+    <string name="NewNoteBodyHint">Skriv note her</string>
+    <string name="NewNoteTitle">Ny note</string>
+    <string name="NewNoteTitleHint">Skriv titel her</string>
+    <string name="SearchResultTitle">Søgeresultater:</string>
+    <string name="about_translators">Launchpad Contributions:
+  David Nielsen https://launchpad.net/~davidnielsen
+  Mads Boserup Lauritsen https://launchpad.net/~madsbola
+  Mads Dyrmann Larsen https://launchpad.net/~madsdyrmannlarsen</string>
+    <string name="allNotebooksFilter">Alle notesbøger</string>
+    <string name="app_desc">Tomboy kombatibel wikiwiki note applikation.</string>
+    <string name="app_name">Tomdroid</string>
+    <string name="author">Olivier Bilodeau</string>
+    <string name="autoBackupPref">Kopier lokal bote til SD kort når der gemmes</string>
+    <string name="autoBackupPrefTitle">Automatisk backup</string>
+    <string name="back">Tilbage</string>
+    <string name="backupPref">Kopier alle lokale noter til SD kort</string>
+    <string name="backupPrefTitle">Backup noter</string>
+    <string name="backup_notes">Kopier alle lokale noter til SD kort? Dette kan overskrive eksisterende noter på SD kortet.</string>
+    <string name="backup_notes_title">Backuo noter?</string>
+    <string name="bold">F</string>
+    <string name="btnCancel">Annuler</string>
+    <string name="btnCancelImport">Afbryd\nImport</string>
+    <string name="btnClose">Afslut</string>
+    <string name="btnOk">OK</string>
+    <string name="btnProjectPage">Projektside</string>
+    <string name="btnRemoveShortcut">Fjern genvej</string>
+    <string name="btnSavetoSD">Gem</string>
+    <string name="btnSendAsFile">Som fil</string>
+    <string name="btnSendAsText">Som tekst</string>
+    <string name="cancel">Annuler</string>
+    <string name="chooseFile">Vælg en fil nedenfor der er enten en Tomboy note fil (som vil blive importeret) eller en almindelig tekstfil (som vil oprette en ny note):</string>
+    <string name="clearSearchHistory">Fjern alle de søgninger du har udført</string>
+    <string name="clearSearchHistoryTitle">Slet søgehistorik</string>
+    <string name="close">Afslut</string>
+    <string name="compare_title">Tomdroid - Note konflikt</string>
+    <string name="contextRevert">Tilbagefør</string>
+    <string name="copy">Opret\nKopi</string>
+    <string name="createShortcut">Opret genvej</string>
+    <string name="delete">Slet</string>
+    <string name="deleteAllNotes">Slet alle noter fra den lokale database</string>
+    <string name="deleteAllNotesTitle">Slet noter</string>
+    <string name="deleteRemoteNotes">Slet alle noter fra fjernadgangen på serveren</string>
+    <string name="deleteRemoteNotesTitle">Slet noter på serveren</string>
+    <string name="delete_all">Slet noter</string>
+    <string name="delete_all_message">Er du sikker på du vil slette databasen med noter</string>
+    <string name="delete_message">Er du sikker på du vil slette denne note?</string>
+    <string name="delete_note">Slet note</string>
+    <string name="delete_remote">Slet\nServerens</string>
+    <string name="delete_remote_notes">Slet noter på serveren</string>
+    <string name="delete_remote_notes_message">Er du sikker på, at du vil slette alle noter fra fjernadgangen på serveren</string>
+    <string name="deleted">Slettet</string>
+    <string name="deletedSearchHistory">Søgehistorik er blevet slettet</string>
+    <string name="diff_content">-- Indholds forskelle --</string>
+    <string name="diff_label">Forskel mellem filer</string>
+    <string name="diff_titles">-- Titel forskelle --</string>
+    <string name="discard">Kasser</string>
+    <string name="edit">Rediger</string>
+    <string name="editTags">Rediger mærker</string>
+    <string name="edit_tags">Rediger mærker herunder, adskilt med kommaer</string>
+    <string name="edit_title">Tomdroid - Rediger note</string>
+    <string name="error">Fejl</string>
+    <string name="filePickerTitle">Tomdroid - Importer note</string>
+    <string name="firstNoteTitle">Tomdroid\'s første note</string>
+    <string name="gettings_notes">modtager liste for noter på serveren</string>
+    <string name="gt"><b>></b></string>
+    <string name="highlight">fremhæv</string>
+    <string name="huge">Enorm</string>
+    <string name="illegalTextSize">Ugyldig valgt tekststørrelse. Vælg venligst et gyldigt tal.</string>
+    <string name="italic">k</string>
+    <string name="large">Stor</string>
+    <string name="line_x">Linje %1$s:</string>
+    <string name="local_label">Lokal udgave</string>
+    <string name="lt"><b>&lt;</b></string>
+    <string name="market_description">En Tomboy klient til Android. Tomboy er en note applikation til din computer som benytter wikiwiki funktionalitet og et simpelt bruger interface.\n\n* Kompatibel med Tomboy note formatet\n* Online Synkronisering med Rainy, Snowy eller Tomboy Online\n* SD kort importering\n* Hjemmeskærm genveje\n* Send og modtag tekst eller note filer fra enhver app\n* Open Source!</string>
+    <string name="market_promotext">Notatskrivning app med online synkronisering kompatibel med Tomboy</string>
+    <string name="market_recent_changes">* Noter kan nu oprettes, redigeres og slettes\n* Fuldstændigt redesignet til både tablets og telefoner\n* Synkroniserer dine noter med kompatible internet tjenester eller til dit SD kort\n* Send og modtag note filer eller tekst fra enhver app\n* Flere indstillingsmuligheder end nogensinde før\n* Tilgængeligt på endnu flere sprog end nogensinde før\n\n* Og meget mere, for en fuldstændig liste af forbedringer se venligst https://launchpad.net/tomdroid/+announcements</string>
+    <string name="market_title">Tomdroid noter</string>
+    <string name="menuAbout">Om</string>
+    <string name="menuFilterNotebook">Filter</string>
+    <string name="menuImport">Importer note</string>
+    <string name="menuNew">Ny</string>
+    <string name="menuPrefs">Indstillinger</string>
+    <string name="menuRevert">Tilbagefør alle</string>
+    <string name="menuSearch">Søg</string>
+    <string name="menuSync">Synkroniser</string>
+    <string name="messageAuthComplete">Autorisation med %1$s lykkedes.</string>
+    <string name="messageAuthFailed">Autorisering med %1$s fejlede. Prøv igen senere!</string>
+    <string name="messageCouldNotSave">Kunne ikke gemme noten.</string>
+    <string name="messageDatabaseReset">Det lykkedes at rydde noter.</string>
+    <string name="messageDiscardChanges">Er du sikker på du vil kassere dine ændringer og genskabe den sidste gemte version af noten?</string>
+    <string name="messageErrorNoteParsing">Fejl ved fortolkning af noten.</string>
+    <string name="messageErrorParsingXML">Der skete en fejl ved fortolkningen af noten. Kontroller venligst din XML-struktur</string>
+    <string name="messageFileNotReadable">Kan ikke læse note filen.</string>
+    <string name="messageFileTooBig">File overskrider den maksimale import størrelse - er du sikker på at det er almindelig tekst?</string>
+    <string name="messageNoSDCard">SDkort ikke fundet.</string>
+    <string name="messageNoteDeleted">Noten blev slette lokalt.</string>
+    <string name="messageNoteNotFound">Den ønskede note er ikke fundet. Måske er den blevet slettet eller flyttet i synkroniseringsprocessen.</string>
+    <string name="messageNoteSaved">Noten er gemt lokalt.</string>
+    <string name="messageNotesBackedUp">Det lykkedes at sikkerhedskopiere alle noter til SD kortet</string>
+    <string name="messageNotesRestored">Det lykkedes at gendanne noter fra SD kortet.</string>
+    <string name="messageRemoteNotesDeleted">Det lykkedes at slette noter fra %1$s.</string>
+    <string name="messageSelectSize">Vælg tekststørrelse</string>
+    <string name="messageSyncAlreadyInProgress">Synkronisering er allerede i gang.</string>
+    <string name="messageSyncCancelled">Synkronisering med %1$s afbrudt.</string>
+    <string name="messageSyncComplete">Synkronisering er %1$s færdig.</string>
+    <string name="messageSyncConnectingFailed">Fejl ved oprettelse af forbindelse til %1$s. Du har muligvis brug for at autentificere dig med serveren i "Indstillinger".</string>
+    <string name="messageSyncError">Der er sket en fejl ved fortolkningen af dine noter. Hvis du har mulighed for at genskabe fejlen bedes du kontakte os!</string>
+    <string name="messageSyncNoConnection">Du er ikke forbundet til internettet.</string>
+    <string name="messageSyncNoNote">Ingen noter fundet i %1$s.</string>
+    <string name="messageSyncNoteDeleteError">Fejl ved sletning af note fra %1$s</string>
+    <string name="messageSyncNoteDeleted">Det lykkedes at slettet note fra %1$s</string>
+    <string name="messageSyncNotePullError">Fejl ved hentning af note fra %1$s</string>
+    <string name="messageSyncNotePulled">Det lykkedes at hente note fra %1$s</string>
+    <string name="messageSyncNotePushError">Fejl ved sendning af note til %1$s</string>
+    <string name="messageSyncNotePushed">Det lykkedes at sende note til %1$s</string>
+    <string name="messageSyncParseFailed">Fejl ved fortolkning af svar fra %1$s.</string>
+    <string name="mono">fast bredde</string>
+    <string name="no">Nej</string>
+    <string name="noFiles">Ingen filer eller direktorier</string>
+    <string name="normal">Normal</string>
+    <string name="noteOptions">Indstillinger for note</string>
+    <string name="note_x_tags">Mærker fra noten \'%1$s\'</string>
+    <string name="old">%1$s (gammel)</string>
+    <string name="overwrite_local">Overskriv\nLokal</string>
+    <string name="overwrite_remote">Overskriv\nServerens</string>
+    <string name="prefAuthenticate">Godkend</string>
+    <string name="prefAutoSave">Gemmer automatisk noter på denne enhed</string>
+    <string name="prefBaseSize">Standard skriftstørrelse</string>
+    <string name="prefDefaultSortingTitle">Standard sorteringsmetode</string>
+    <string name="prefDeletedNotes">Vis slettede noter i noteliste hvis valgt.</string>
+    <string name="prefDeletedNotesTitle">Vis slettede noter</string>
+    <string name="prefDescSyncOnStart">Synkroniser dine noter ved opstart af applikationen</string>
+    <string name="prefDisplay">Skærmindstillinger</string>
+    <string name="prefFolderCreated">Mappen \"%1$s\" eksisterer ikke endnu. Forbind venligst din enhed til computeren, opret en mappe og læg dine *.note filer i den.</string>
+    <string name="prefLinkAddresses">Link addresser til kort applikation</string>
+    <string name="prefLinkAddressesTitle">Link kortadresser</string>
+    <string name="prefLinkEmails">f.eks. navn@adresse.dk</string>
+    <string name="prefLinkEmailsTitle">Link emails</string>
+    <string name="prefLinkPhones">Link telefonnumre til telefon applikation</string>
+    <string name="prefLinkPhonesTitle">Link telefonnumre</string>
+    <string name="prefLinkTitles">Link til andre notetitler</string>
+    <string name="prefLinkTitlesTitle">Link titler</string>
+    <string name="prefLinkUrls">f.eks. "www.google.dk"</string>
+    <string name="prefLinkUrlsTitle">Link webadresser"</string>
+    <string name="prefLinks">Hyperlink indstillinger</string>
+    <string name="prefLocation">Placering på SD-kort</string>
+    <string name="prefNoValidEntry">\"%1$s\" er ikke en gyldig værdi. Forsøg venligst igen!</string>
+    <string name="prefNoValidLocation">\"%1$s\" er ikke en gyldig mappe. Forsøg venligst igen!</string>
+    <string name="prefNoteTemplates">Hvis valgt, vil skabeloner for note blive vist i noteslisten.</string>
+    <string name="prefNoteTemplatesTitle">Hvis skabeloner for noter</string>
+    <string name="prefSDCard">SD-kort</string>
+    <string name="prefServerEmpty">Serverens adresse er skiftet, men den nye adresse er tom</string>
+    <string name="prefSortDate">Dato ændret</string>
+    <string name="prefSortTitle">Notetitel</string>
+    <string name="prefSorting">Sorter efter:</string>
+    <string name="prefSync">Synkronisering</string>
+    <string name="prefSyncCompleteAuth">Afslutter godkendelse. Vent venligst...</string>
+    <string name="prefSyncConnectionFailed">Forbindelsen til serveren mislykkedes. Tjek venligst,  at du har indtastet den rigtige adresse.</string>
+    <string name="prefSyncOnStart">Synkroniser automatisk ved opstart</string>
+    <string name="prefSyncServer">Server</string>
+    <string name="prefSyncService">Tjeneste</string>
+    <string name="prefTomboyWeb">Online synkronisering</string>
+    <string name="prefTools">Værktøjer</string>
+    <string name="pref_title">Tomdroid - Indstillinger</string>
+    <string name="remote_label">Serverversion</string>
+    <string name="restorePrefTitle">Gendan noter</string>
+    <string name="restore_notes">Kopier alle noter fra SD kort? Dette kan overskrive dine eksisterende noter.</string>
+    <string name="restore_notes_title">Gendan noter?</string>
+    <string name="revert_note">Tilbagefør note</string>
+    <string name="revert_note_message">Er du sikker på, at du vil overskrive denne lokale note, med den version som findes via fjernadgangen på serveren?</string>
+    <string name="revert_notes">Tilbagefør noter</string>
+    <string name="revert_notes_message">Er du sikker på, at du vil overskrive alle dine lokale noter, med den version som findes via fjernadgangen på serveren?</string>
+    <string name="save">Gem</string>
+    <string name="search_description">Tast dine noter ind</string>
+    <string name="search_hint">Søg i noter</string>
+    <string name="search_title">Tomdroid - Søgeresultater</string>
+    <string name="send">Send</string>
+    <string name="sendChoice">Hvordan vil du sende noten?</string>
+    <string name="sendChoiceTitle">Vælg metode til at sende</string>
+    <string name="shortcut_menu_item_caption">Tomdroid note</string>
+    <string name="shortcut_title">Tomdroid - Genveje</string>
+    <string name="shortcuts_view_caption">Vælg en note</string>
+    <string name="size">størrelse</string>
+    <string name="small">Lille</string>
+    <string name="sortByDate">Sorter efter dato</string>
+    <string name="sortByTitle">Sorter efter titel</string>
+    <string name="strAbout">%1$s\n\Forfatter: %2$s\nVersion: %3$s\nGivet i lincens under GPLv3</string>
+    <string name="strListEmptyNoNotebooks">Der er ingen notesbøger i databasen</string>
+    <string name="strListEmptyNoNotes">Der er ingen noter i Tomdroids database</string>
+    <string name="strListEmptyWaiting">Vent venligst mens noter indlæses...</string>
+    <string name="strNoResults">Ingen note fundet for \"%s\"</string>
+    <string name="strWait">Vent venligst mens noten hentes...</string>
+    <string name="strWelcome">Velkommen til Tomdroid.\n\nBemærk venligst at dette er beta software i testfasen og, at det indeholder kendte problemer.\n\nVi er alle bekendte med disse problemer og søger at løse dem så hurtigt som muligt. Men jeg ville gerne have en version ud og få testet hos jer så hurtigt som muligt.\n\nDu skal være mere end velkommen til at bidrage til projektet på alle niveauer. Kig ind på  launchpad.net/tomdroid og kontakt os!\n</string>
+    <string name="strike"><strike>g</strike></string>
+    <string name="sync_conflict_deleted">Den lokale version er allerede slettet. Vælg venligst en af handlingerne nedenfor.</string>
+    <string name="sync_conflict_description">Der var en konflikt under synkronisering af noten \'%1$s\'</string>
+    <string name="sync_conflict_import_message">Noten eksisterer allerede i databasen. Vælg venligst en handling til at løse konflikten. Du kan redigere en af noterne før valg, eller vise forskellen ved at klikke på mærkaterne nedenfor.</string>
+    <string name="sync_conflict_message">Vælg venligst en handling til løsning af konflikten. Du kan redigere en af noterne før valg, eller vise forskellen ved at klikke på mærkaterne nedenfor.</string>
+    <string name="sync_conflict_titles_message">En note med den titel eksisterer allerede i databasen. Vælg venligst en handling til at løse konflikten. Du kan redigere en af noterne før valg, eller vise forskellen ved at klikke på mærkaterne nedenfor.</string>
+    <string name="syncing">Synkronisere med %1$s</string>
+    <string name="syncing_connect">Forbinder til server...</string>
+    <string name="syncing_local">Opdaterer lokale noter...</string>
+    <string name="syncing_remote">updatere noter på serveren</string>
+    <string name="textModified">Ændret:</string>
+    <string name="textToday">I dag</string>
+    <string name="textYexterday">I går</string>
+    <string name="titleAbout">Om Tomdroid</string>
+    <string name="titleDefaultSorting">Vælg standard sorteringsmetode</string>
+    <string name="titleDiscardChanges">Kasser ændringer?</string>
+    <string name="titleErrorParsingXML">Fejl ved fortolkning af note</string>
+    <string name="titleNoteNotFound">Noten findes ikke</string>
+    <string name="titleSyncService">Vælg hvilken synkroniseringsmetode, der skal bruges</string>
+    <string name="titleWelcome">Advarsel</string>
+    <string name="undelete">Genopret note</string>
+    <string name="view">Vis</string>
+    <string name="view_title">Tomdroid - Vis note</string>
+    <string name="yes">Ja</string>
+
+</resources>
