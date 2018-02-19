@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <!-- From: file:/home/enims/Applications/AndroidStudio/tomdroid/res/values-v11/styles.xml -->
-    <style name="DarkTheme" parent="@android:style/Theme.Holo"></style>
-
-    <style name="LightTheme" parent="@android:style/Theme.Holo.Light"></style>
-
-</resources>
