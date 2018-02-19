@@ -116,6 +116,11 @@ public class SSHSyncService extends SyncService {
 	}
 
 	@Override
+	public boolean needsLogin() {
+		return true;
+	}
+
+	@Override
 	public boolean needsAuth() {
 		return false;
 	}
