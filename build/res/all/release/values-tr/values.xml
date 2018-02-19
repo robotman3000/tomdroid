@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/home/enims/Applications/AndroidStudio/tomdroid/res/values-tr/strings.xml -->
+    <string-array name="firstNoteContent">
+        <item>Tomdroid\'e Hoşgeldiniz!\n</item>
+        <item>Burada henüz bir notunuz yok. Başlamak için, ayarların içinde bulunan eşitleme ayarlarından size uygun olanı seçin. 2 adet senkronizasyon seçeneği mevcuttur.\n</item>
+        <item>= Çevrimiçi Eşitleme=</item>
+        <!-- =text= makes <size:large>text</size:large> -->
+        <item>Eğer Tomboy-Çevrimiçi\'ye, kendi Rainy/Snowy sunucunuza veya Tomboy Web REST API\'ı destekleyen herhangi bir sunucuya eşitleme yapmak istiyorsanız Çevrimiçi Eşzamanlama, tam olarak aradığınız şeydir.\n</item>
+        <item>Çevrimiçi Eşitleme seçeneğinden Eşitleme Hizmetini kullanın, ardından da Sunucu URL\'nizi girin. Herkesin kullanabildiği birkaç sunucu:</item>
+        <!-- -text is for list-items. -->
+        <item>-Tomboy Online - https://edge.tomboy-online.org/</item>
+        <!-- -text is for list-items. -->
+        <item>-rainy.notesync.org - https://notesync.org:8080/[kullanıcıadı]/[parola]/\n</item>
+        <item>Başlamadan önce, Tomdroid üst çubuğunda bulunan Eşitleme simgesine tıklayarak notlarınızı eşitleyebilirsiniz.\n</item>
+        <item>Not: Bu uygulama hala geliştirme aşamasında olduğundan ve Tomboy notlarınız zarar görebileceğinden, eşitlemeden önce Tomboy notlarınızı yedeklemek isteyebilirsiniz.</item>
+        <item>Tüm platformlardaki *.note dosyalarının konumunu içi http://live.gnome.org/Tomboy/Directories sayfasına bakın.\n</item>
+        <!-- =text= makes <size:large>text</size:large> -->
+        <item>= SD Card=</item>
+        <item>Tomboy notlarınızı (*.note), SD Kartınızın tomdroid/ dizini altına koyun. Notlar kopyalandıktan sonra, Tercihler içerisinden Eşitleme Hizmetini SD Kart olarak ayarlayın ve Tomdroid\'in üst çubuğundaki Eşitleme logosuna dokunun.\n</item>
+        <item>Ayrıca, Tomdroid her zaman yeni katkıcılara ihtiyaç duyar. Eğer tomdroid-dev takımına ilgi duyuyorsanız, Launchpad\'de bize katılın: http://launchpad.net/~tomdroid-dev.\n</item>
+        <item>Son olarak, herhangi bir sorunla karşılaştığınızda , lütfen https://bugs.launchpad.net/tomdroid bu siteye rapor edin ki biz de geliştirmeye yardımcı olalım.</item>
+    </string-array>
+
+    <string name="NewNoteBodyHint">Notu buraya girin.</string>
+    <string name="NewNoteTitle">Yeni Not</string>
+    <string name="NewNoteTitleHint">Başlığı buraya girin.</string>
+    <string name="SearchResultTitle">Arama Sonuçları:</string>
+    <string name="about_translators">Launchpad Contributions:
+  Mesut Yaver https://launchpad.net/~afg-mesut
+  Stefan Hammer https://launchpad.net/~j-4
+  Volkan Gezer https://launchpad.net/~volkangezer
+  baris ozcan https://launchpad.net/~brsozcan
+  kulkke https://launchpad.net/~kulkke
+  zeugma https://launchpad.net/~sunder67</string>
+    <string name="allNotebooksFilter">Tüm not defterleri</string>
+    <string name="app_desc">Tomboy "wikiwiki not alma" uygulamasıyla uyumludur.</string>
+    <string name="app_name">Tomdroid</string>
+    <string name="author">Olivier Bilodeau</string>
+    <string name="autoBackupPref">Yerel Notları SD Card\'a kopyala</string>
+    <string name="autoBackupPrefTitle">Otomatik Yedekle</string>
+    <string name="back">Geri</string>
+    <string name="backupPref">SD Card\'dan bütün yerel notları kopyala</string>
+    <string name="backupPrefTitle">Notları Yedekle</string>
+    <string name="backup_notes">SD Card\'da bulunan bütün notları kopyala? Eğer SD Card\'da aynı isimli bir not varsa üstüne yazar</string>
+    <string name="backup_notes_title">Notları Yedekle?</string>
+    <string name="bold">B</string>
+    <string name="btnCancel">Vazgeç</string>
+    <string name="btnCancelImport">İptal\n Almaktan</string>
+    <string name="btnClose">Kapat</string>
+    <string name="btnOk">Tamam</string>
+    <string name="btnProjectPage">Proje sayfası</string>
+    <string name="btnRemoveShortcut">Kısayolu kaldır</string>
+    <string name="btnSavetoSD">Kaydet</string>
+    <string name="btnSendAsFile">Dosya şeklinde</string>
+    <string name="btnSendAsText">Metin şeklinde</string>
+    <string name="cancel">Vazgeç</string>
+    <string name="chooseFile">Aşağıdaki dosyalardan birisini seçin. Bunlar Tomboy not dosyası( dışarıdan alınabilir) ya da sadece metin içeren dosyalar( Yeni Not ile yaratabilirsiniz) olabilir.</string>
+    <string name="clearSearchHistory">Yapmış olduğum tüm aramaları kaldır</string>
+    <string name="clearSearchHistoryTitle">Arama geçmişini temizle</string>
+    <string name="close">Kapat</string>
+    <string name="compare_title">Tomdroid - Not Çakışması</string>
+    <string name="contextRevert">Tersine Çevir</string>
+    <string name="copy">Yeni\n Kopyala</string>
+    <string name="createShortcut">Kısayol oluştur</string>
+    <string name="delete">Sil</string>
+    <string name="deleteAllNotes">Yerel veri tabanından bütün notları temizle</string>
+    <string name="deleteAllNotesTitle">Notları Temizle</string>
+    <string name="deleteRemoteNotes">Uzakta cihazlarda bulunan bütün notları sil.</string>
+    <string name="deleteRemoteNotesTitle">Bu bilgisayarda olmayan notları sil</string>
+    <string name="delete_all">Notları Temizle</string>
+    <string name="delete_all_message">Veritabanındaki bütün notları silmek istediğinize emin misiniz?</string>
+    <string name="delete_message">Bu notu silmek istediğinizden emin misiniz?</string>
+    <string name="delete_note">Notu Sil</string>
+    <string name="delete_remote">Sil\n Uzak cihazdakini</string>
+    <string name="delete_remote_notes">Bu bilgisayarda olmayan notları sil</string>
+    <string name="delete_remote_notes_message">Bu bilgisayarda  olmayan bütün notların silinmesini istediğinize emin misiniz?</string>
+    <string name="deleted">Silindi</string>
+    <string name="deletedSearchHistory">Arama geçmişi temizlendi.</string>
+    <string name="diff_content">-- İçerik Farklılıkları --</string>
+    <string name="diff_label">Dosyaların Farkları</string>
+    <string name="diff_titles">-- Başlık Farklılıkları --</string>
+    <string name="discard">Vazgeç</string>
+    <string name="edit">Düzenle</string>
+    <string name="editTags">Etiketleri Düzenle</string>
+    <string name="edit_tags">Aşağıdaki etiketleri düzenleyin, virgüllerle ayırın.</string>
+    <string name="edit_title">Tomdroid - Notu Düzelt</string>
+    <string name="error">Hata</string>
+    <string name="filePickerTitle">Tomdroid - Alınan Not</string>
+    <string name="firstNoteTitle">Tomdroid\'de ki ilk not</string>
+    <string name="gettings_notes">Uzak cihazlardan lise alınıyor...</string>
+    <string name="gt"><b>></b></string>
+    <string name="highlight">vurgula</string>
+    <string name="huge">Çok Büyük</string>
+    <string name="illegalTextSize">Geçerli bir metin boyutu seçmediniz. Lütfen bir numara girin.</string>
+    <string name="italic">i</string>
+    <string name="large">Büyük</string>
+    <string name="line_x">Satır %1$s:</string>
+    <string name="local_label">Yerel Dosyada</string>
+    <string name="lt"><b>&lt;</b></string>
+    <string name="market_description">Tomboy, Android için geliştirilmiş, "wikiwiki" yaklaşımını kullanan basit bir arayüze sahip masaüstü not programıdır.\n\n* Not formatları Tomboy ile uyumludur\n* "Yağmurlu ve Karlı" serverlarında online not sekronizasyonu imkanı sağlar\n* SD kart\'tan bilgi alabilir\n* Ana ekran kısayolları\n* Herhangi bir uygulamaya not ve metin yollayabilir veya uygulamadan not ve metin alabilir.\n*
+Ve Açık Kaynak!!\n*Tomboy Çeviri Ekibi (Barış Özcan)</string>
+    <string name="market_promotext">Tomboy ile uyumlu çevrimiçi eşitleme özellikli not alma uygulaması</string>
+    <string name="market_recent_changes">İstediğiniz gibi not yaratabilir düzenleyebilir ve silebilirsiniz\n* Tablet ve telefonlar için tekrar dizayn edildi\n* Notlarınızı online servislerimize veya SD karta senkronize edip saklayabilirsiniz\n* Herhangi bir uygulamadan metin veya dosya alabilir ya da uygulamaya gönderebilirsiniz\n* Önceki sürümlere göre daha ayarlanabilir \n* Daha fazla dil için uygun\n\n Daha fazlası için lütfen https://launchpad.net/tomdroid/+announcements</string>
+    <string name="market_title">Tomdroid notları</string>
+    <string name="menuAbout">Hakkında</string>
+    <string name="menuFilterNotebook">Süzgeç</string>
+    <string name="menuImport">Notu Al</string>
+    <string name="menuNew">Yeni</string>
+    <string name="menuPrefs">Ayarlar</string>
+    <string name="menuRevert">Her şeyi geri al</string>
+    <string name="menuSearch">Ara</string>
+    <string name="menuSync">Eşitle</string>
+    <string name="messageAuthComplete">%1$s ile kimlik doğrulama başarılı.</string>
+    <string name="messageAuthFailed">%1$s kimlik doğrulaması başarısız. Daha sonra tekrar deneyin!</string>
+    <string name="messageCouldNotSave">Not kaydedilemedi.</string>
+    <string name="messageDatabaseReset">Notlar başarıyla temizlendi.</string>
+    <string name="messageDiscardChanges">Değişikliklerden vazgeçip notunuzun son kayıtlı haline dönmesini istiyor musunuz?</string>
+    <string name="messageErrorNoteParsing">Not açılamıyor.</string>
+    <string name="messageErrorParsingXML">Not ayrıştırma hatası aldınız. Kayıtlı XML\'i kontrol ediniz.</string>
+    <string name="messageFileNotReadable">Not dosyası okunamıyor.</string>
+    <string name="messageFileTooBig">Dosya alma limiti aşan bir dosya talep ediyorsunuz. İçinde sadece metin olduğundan emin misiniz?</string>
+    <string name="messageNoSDCard">SDCard hafızası bulunamadı.</string>
+    <string name="messageNoteDeleted">Not hafızadan silindi.</string>
+    <string name="messageNoteNotFound">İstenilen not bulunamadı. Eşitleme yoluyla silinmiş veya kaldırılmış olabilir.</string>
+    <string name="messageNoteSaved">Not hafızaya kaydedildi.</string>
+    <string name="messageNotesBackedUp">Notlar başarıyla SD Card\'a yedeklendi</string>
+    <string name="messageNotesRestored">Notlar SD Card\'dan başarıyla geri yüklendi.</string>
+    <string name="messageRemoteNotesDeleted">%1$s \'dan not başarıyla silindi.</string>
+    <string name="messageSelectSize">Metin boyutunu seçin.</string>
+    <string name="messageSyncAlreadyInProgress">Eşitleme zaten sürüyor</string>
+    <string name="messageSyncCancelled">%1$s ile eşitleme iptal edildi.</string>
+    <string name="messageSyncComplete">%1$s ile eşitleme tamamlandı.</string>
+    <string name="messageSyncConnectingFailed">%1$s \'a bağlanmada bir sorun oluştu. "Ayarlar"dan kimlik doğrulamanız gerekiyor olabilir.</string>
+    <string name="messageSyncError">Not koleksiyonunuz ayrıştırılırken bir hata oluştu. Eğer sorunu tekrarlatabiliyorsanız, lütfen bize ulaşın!</string>
+    <string name="messageSyncNoConnection">İnternet\'e bağlı değilsiniz.</string>
+    <string name="messageSyncNoNote">%1$s üzerinde hiç not bulunamadı.</string>
+    <string name="messageSyncNoteDeleteError">%1$s \'da bulunan not silinirken hata oluştu.</string>
+    <string name="messageSyncNoteDeleted">%1$s bulunan not başarıyla silindi.</string>
+    <string name="messageSyncNotePullError">%1$s \'dan not alınırken hata oluştu.</string>
+    <string name="messageSyncNotePulled">%1$s \'dan başarıyla not alındı</string>
+    <string name="messageSyncNotePushError">%1$s \' a not gönderilirken hata oluştu.</string>
+    <string name="messageSyncNotePushed">%1$s \'a başarıyla not gönderildi.</string>
+    <string name="messageSyncParseFailed">%1$s \' dan ayrıştırma yapılırken hata alındı.</string>
+    <string name="mono">eşaralıklı</string>
+    <string name="no">Hayır</string>
+    <string name="noFiles">Dosya ya da dizin yok</string>
+    <string name="normal">Normal</string>
+    <string name="noteOptions">Not Seçenekleri</string>
+    <string name="note_x_tags">\'%1$s\' Etiketi Altındaki Notlar</string>
+    <string name="old">%1$s (eski)</string>
+    <string name="overwrite_local">Üzerine Yaz\n Yerele</string>
+    <string name="overwrite_remote">Üzerine Yaz\n Uzaktaki cihaza</string>
+    <string name="prefAuthenticate">Kimlik Doğrula</string>
+    <string name="prefAutoSave">Notları geçerli editörle otomatik kaydet.</string>
+    <string name="prefBaseSize">Temel Yazı Tipi Boyutu</string>
+    <string name="prefDefaultSortingTitle">Varsayılan Sıralama Yöntemi</string>
+    <string name="prefDeletedNotes">Onaylarsanız, not listenizde silinmiş olan notlar da gösterilecektir.</string>
+    <string name="prefDeletedNotesTitle">Silinmiş Notları Göster</string>
+    <string name="prefDescSyncOnStart">Uygulama başladığında notlarınızı eşitleyin</string>
+    <string name="prefDisplay">Görüntü Tercihleri</string>
+    <string name="prefFolderCreated">\"%1$s\" klasörü henüz mevcut değil. Lütfen cihazınızı bilgisayara bağlayın, klasörü oluşturun ve *.note dosyalarıyla doldurun.</string>
+    <string name="prefLinkAddresses">Adresleri harita uygulamasına bağla</string>
+    <string name="prefLinkAddressesTitle">Harita Konumu Linki</string>
+    <string name="prefLinkEmails">Ör: name@address.com</string>
+    <string name="prefLinkEmailsTitle">E-mail Linki</string>
+    <string name="prefLinkPhones">Telefon numaralarını telefon uygulamasına bağla</string>
+    <string name="prefLinkPhonesTitle">Telefon Numarası Linki</string>
+    <string name="prefLinkTitles">Diğer not başlıklarına bağlantı</string>
+    <string name="prefLinkTitlesTitle">Link Başlığı</string>
+    <string name="prefLinkUrls">Ör: "www.google.com</string>
+    <string name="prefLinkUrlsTitle">Web Adresi Linki</string>
+    <string name="prefLinks">Link Bağlantısı Ayarları</string>
+    <string name="prefLocation">SD Karttaki konum</string>
+    <string name="prefNoValidEntry">\"%1$s\" geçerli bir girdi değil. Lütfen tekrar deneyin.</string>
+    <string name="prefNoValidLocation">\"%1$s\" geçerli bir dosya konumu değil. Lütfen tekrar deneyin.</string>
+    <string name="prefNoteTemplates">Onaylarsanız, not listenizde not şablonları gösterilecektir.</string>
+    <string name="prefNoteTemplatesTitle">Not Şablonlarını Göster</string>
+    <string name="prefSDCard">SD Kart</string>
+    <string name="prefServerEmpty">Sunucu adresi değişti fakat yeni değer boş</string>
+    <string name="prefSortDate">Değiştirilme Tarihi</string>
+    <string name="prefSortTitle">Not Başlığı</string>
+    <string name="prefSorting">Sırala:</string>
+    <string name="prefSync">Eşitleme</string>
+    <string name="prefSyncCompleteAuth">Kimlik doğrulama tamamlanıyor. Lütfen bekleyin...</string>
+    <string name="prefSyncConnectionFailed">Sunucu bağlantısı başarısız oldu, lütfen girdiğiniz adresin doğruluğunu denetleyin.</string>
+    <string name="prefSyncOnStart">Başlangıçta otomatik eşitle</string>
+    <string name="prefSyncServer">Sunucu</string>
+    <string name="prefSyncService">Hizmet</string>
+    <string name="prefTomboyWeb">Çevrimiçi Eşitleme</string>
+    <string name="prefTools">Araçlar</string>
+    <string name="pref_title">Tomdroid - Ayarlar</string>
+    <string name="remote_label">Uzak cihazdaki dosyada</string>
+    <string name="restorePrefTitle">Notları Geri Yükle</string>
+    <string name="restore_notes">Bütün notları SD Card\'dan mı alsın? Var olan dosyanın üstüne yazılabilir</string>
+    <string name="restore_notes_title">Notları Geri Yükle?</string>
+    <string name="revert_note">Notu geri al</string>
+    <string name="revert_note_message">Bunu yaparsanız uzak cihazdaki not ne olursa olsun yerel notunuz değiştirilecektir. Bunu yine de yapmak istiyor musunuz?</string>
+    <string name="revert_notes">Notları geri al</string>
+    <string name="revert_notes_message">Bunu yaparsanız uzak cihazdaki notlar ne olursa olsun yerel notlarınız değiştirilecektir. Bunu yine de yapmak istiyor musunuz?</string>
+    <string name="save">Kaydet</string>
+    <string name="search_description">Notlarınızdaki metinler</string>
+    <string name="search_hint">Notları Ara</string>
+    <string name="search_title">Tomdroid - Arama Sonuçları</string>
+    <string name="send">Gönder</string>
+    <string name="sendChoice">Notu nasıl göndermek isterdiniz?</string>
+    <string name="sendChoiceTitle">Gönderme Şeklini Seçin.</string>
+    <string name="shortcut_menu_item_caption">Tomdroid Notu</string>
+    <string name="shortcut_title">Tomdroid - Kısayollar</string>
+    <string name="shortcuts_view_caption">Bir Not Seçin</string>
+    <string name="size">boyut</string>
+    <string name="small">Küçük</string>
+    <string name="sortByDate">Tarihe göre Sırala</string>
+    <string name="sortByTitle">Başlığa göre sırala</string>
+    <string name="strAbout">%1$s\n\nYazar: %2$s\nSürüm: %3$s\nGPLv3 ile lisanslanmıştır</string>
+    <string name="strListEmptyNoNotebooks">Veritabanında hiç not defteri yok.</string>
+    <string name="strListEmptyNoNotes">Tomdroid\'in veritabanında hiç not yok.</string>
+    <string name="strListEmptyWaiting">Notlar yüklenirken lütfen bekleyin.</string>
+    <string name="strNoResults">\"%s\" için hiç not bulunamadı</string>
+    <string name="strWait">Notlar yüklenirken lütfen bekleyin...</string>
+    <string name="strWelcome">Tomdroid\'e hoşgeldin.\n\n Başlamadan önce programın Beta sürümü olduğunu ve hatalar barındırabileceğini unutmayınız.\n\n Bu problemlerin farkındayız ve elimizden geldiğince hızlı bir şekilde bunları çözeceğiz. Sizden istediğim programı olabildiğince çabuk test etmeniz ve hataları ortaya çıkarmanız.\n\n Eğer bize katkıda bulunmak isterseniz, her şekildeki yardımınız bizi çok mutlu eder. launchpad.net/tomdroid adresine girip contact us\' a tıklayarak bize ulaşabilirsiniz.\n</string>
+    <string name="strike"><strike>S</strike></string>
+    <string name="sync_conflict_deleted">Yerel sürüm zaten silinmiş. Lütfen aşağıdaki eylemlerden birini seçin.</string>
+    <string name="sync_conflict_description">\'%1$s\' notu eşitlenirken bir çakışma oluştu</string>
+    <string name="sync_conflict_import_message">Bu not zaten veritabanında mevcut. Lütfen çakışmayı çözmek için bir eylem seçin. Notu seçmeden önce düzenleyebilir ve aşağıdaki etiketleri kullanarak farklılıkları görebilirsiniz.</string>
+    <string name="sync_conflict_message">Lütfen çakışmayı çözmek için bir eylem seçin. Notu seçmeden önce düzenleyebilir ve aşağıdaki etiketleri kullanarak farklılıkları görebilirsiniz.</string>
+    <string name="sync_conflict_titles_message">Bu başlıkta başka bir not zaten veritabanında mevcut. Lütfen çakışmayı çözmek için bir eylem seçin. Notu seçmeden önce düzenleyebilir ve aşağıdaki etiketleri kullanarak farklılıkları görebilirsiniz.</string>
+    <string name="syncing">%1$s ile eşitleniyor</string>
+    <string name="syncing_connect">Hizmete bağlanılıyor...</string>
+    <string name="syncing_local">Yerel notlar güncelleniyor...</string>
+    <string name="syncing_remote">Uzak cihazlardaki notlar güncelleniyor...</string>
+    <string name="textModified">Değiştirildi:</string>
+    <string name="textToday">Bugün</string>
+    <string name="textYexterday">Dün</string>
+    <string name="titleAbout">Tomdroid Hakkında</string>
+    <string name="titleDefaultSorting">Varsayılan sıralama metodunu değiştir.</string>
+    <string name="titleDiscardChanges">Değişikliklerden vazgeçilsin mi?</string>
+    <string name="titleErrorParsingXML">Not ayrıştırma hatası</string>
+    <string name="titleNoteNotFound">Böyle Bir Not Yok</string>
+    <string name="titleSyncService">Eşitleyeceğiniz hizmeti seçin.</string>
+    <string name="titleWelcome">Uyarı</string>
+    <string name="undelete">Notu Silme</string>
+    <string name="view">Görünüm</string>
+    <string name="view_title">Tomdroid - Notu Göster</string>
+    <string name="yes">Evet</string>
+
+</resources>

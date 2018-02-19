@@ -60,6 +60,7 @@ import org.tomdroid.util.Time;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class PreferencesActivity extends ActionBarPreferenceActivity {
 	
@@ -83,6 +84,7 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 	private EditTextPreference syncPassword = null;
 	private ListPreference syncService = null;
 	private EditTextPreference sdLocation = null;
+	private EditTextPreference idRsaFile = null;
 	private Preference delNotes = null;
 	private Preference clearSearchHistory = null;
 	private Preference backupNotes = null;
@@ -120,6 +122,7 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 		syncPassword = (EditTextPreference)findPreference(Preferences.Key.SYNC_PASSWORD.getName());
 		syncService = (ListPreference)findPreference(Preferences.Key.SYNC_SERVICE.getName());
 		sdLocation = (EditTextPreference)findPreference(Preferences.Key.SD_LOCATION.getName());
+		idRsaFile = (EditTextPreference)findPreference(Preferences.Key.ID_RSA_FILE.getName());
 		clearSearchHistory = (Preference)findPreference(Preferences.Key.CLEAR_SEARCH_HISTORY.getName());
 		delNotes = (Preference)findPreference(Preferences.Key.DEL_ALL_NOTES.getName());
 		delRemoteNotes = (Preference)findPreference(Preferences.Key.DEL_REMOTE_NOTES.getName());
@@ -162,13 +165,37 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 				String newURL = serverUri.toString();
 				boolean retval = true;
 				
-				if ( !URLUtil.isValidUrl(newURL) || newURL.indexOf(' ') != -1 ) {
-					noValidEntry(newURL);
-					retval = false;
+				if (syncService.getValue().contains(org.tomdroid.sync.ssh.SSHSyncService.NAME)) {
+					// check sshPattern
+					Pattern p = org.tomdroid.sync.ssh.SSHSyncService.getConnectionStringRegex();
+					if (!p.matcher(newURL).find()){
+						String message = getString(R.string.messageTry);
+						message = String.format(message, getString(R.string.messageSshConnectionStringExample));
+						Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+						noValidEntry(newURL);
+						retval = false;
+					} else {
+						//FIXME XXX!! reauthenticate ... see below.
+						syncServer.setSummary(newURL);
+					}
 				} else {
-					syncServer.setSummary(newURL);
-					reauthenticate();
+				
+					if ( !URLUtil.isValidUrl(newURL) || newURL.indexOf(' ') != -1 ) {
+						noValidEntry(newURL);
+						retval = false;
+					} else {
+						syncServer.setSummary(newURL);
+						reauthenticate();
+					}
 				}
+				
+				// if sync service is sd-card -> needsLocation == true, then reset sync values
+				// last sync revision to -1 and date to 1970 to force  a complete sync
+				if (SyncManager.getService(syncService.getValue()).needsServer()) {
+					Preferences.putLong(Preferences.Key.LATEST_SYNC_REVISION, (Long)Preferences.Key.LATEST_SYNC_REVISION.getDefault());
+					Preferences.putString(Preferences.Key.LATEST_SYNC_DATE, new Time().formatTomboy());
+				}
+				
 				return retval;
 			}
 			
@@ -247,6 +274,21 @@ public class PreferencesActivity extends ActionBarPreferenceActivity {
 				return retval;
 			}
 		});
+		
+		idRsaFile.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+			
+			public boolean onPreferenceChange(Preference preference, Object object) {
+				String idRsaLocation = object.toString();
+				if (new File(idRsaLocation).isFile()) {
+					idRsaFile.setSummary(idRsaLocation);
+					Preferences.putString(Preferences.Key.ID_RSA_FILE, idRsaLocation);
+					return true;
+				} else {
+					noValidEntry(idRsaLocation);
+					return false;
+				}
+			}
+		});;
 		
 		//delete Search History
 		clearSearchHistory.setOnPreferenceClickListener(new OnPreferenceClickListener() {
