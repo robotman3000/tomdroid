@@ -99,6 +99,7 @@ public class SyncManager {
 		services.add(new SdCardSyncService(activity, handler));
 		services.add(new WebDAVSyncService(activity, handler));
 		services.add(new SSHSyncService(activity, handler));
+
 	}
 
 	// new methods to TEdit
