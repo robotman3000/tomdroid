@@ -34,6 +34,8 @@ public class Preferences {
 		SYNC_SERVER_ROOT_API ("sync_server_root_api", ""),
 		SYNC_SERVER_USER_API ("sync_server_user_api", ""),
 		SYNC_SERVER ("sync_server", "https://"),
+		SYNC_LOGIN ("sync_login", ""),
+		SYNC_PASSWORD ("sync_password", ""),
 		SD_LOCATION ("sd_location", "tomdroid"),
 		LAST_FILE_PATH ("last_file_path", "/"),
 		SYNC_ON_START("sync_on_start",false),

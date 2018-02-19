@@ -64,6 +64,9 @@
 	<string name="prefSyncServer">Server</string>
 	<string name="prefSDCard">SD Card</string>
 	<string name="prefTomboyWeb">Online Synchronization</string>
+	<string name="prefTomboyWebDav">WebDAV Synchronization</string>
+	<string name="prefSyncLogin">Login/Username for WebDAV</string>
+	<string name="prefSyncPassword">Password for WebDAV</string>
 	<string name="prefAuthenticate">Authenticate</string>
 	<string name="prefLocation">Location on SD Card</string>
 	<string name="prefSyncOnStart">Autosync on Startup</string>
