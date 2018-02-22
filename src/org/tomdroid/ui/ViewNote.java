@@ -30,6 +30,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,13 +42,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.tomdroid.Note;
 import org.tomdroid.NoteManager;
 import org.tomdroid.R;
 import org.tomdroid.sync.SyncManager;
+import org.tomdroid.ui.actionbar.ActionBarActivity;
 import org.tomdroid.util.LinkifyPhone;
 import org.tomdroid.util.NoteContentBuilder;
 import org.tomdroid.util.NoteViewShortcutsHelper;
+import org.tomdroid.util.Preferences;
 import org.tomdroid.util.Send;
 import org.tomdroid.util.TLog;
 
@@ -55,15 +60,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // TODO this class is starting to smell
-public class ViewNote extends Activity {
+public class ViewNote extends ActionBarActivity {
 	public static final String CALLED_FROM_SHORTCUT_EXTRA = "org.tomdroid.CALLED_FROM_SHORTCUT";
     public static final String SHORTCUT_NAME = "org.tomdroid.SHORTCUT_NAME";
 
     // UI elements
+	private TextView content;
 	private TextView title;
 
-	private TextView content;
-    // Model objects
+	// Model objects
 	private Note note;
 
 	private SpannableStringBuilder noteContent;
@@ -71,31 +76,25 @@ public class ViewNote extends Activity {
 	// Logging info
 	private static final String TAG = "ViewNote";
     // UI feedback handler
-	private Handler	syncMessageHandler	= new SyncMessageHandler(this);
+	
+	private Uri uri;
 
 	// TODO extract methods in here
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		Preferences.init(this, Tomdroid.CLEAR_PREFERENCES);
 		setContentView(R.layout.note_view);
+		
 		content = (TextView) findViewById(R.id.content);
-		content.setBackgroundColor(0xffffffff);
-		content.setTextColor(Color.DKGRAY);
-		content.setTextSize(18.0f);
 		title = (TextView) findViewById(R.id.title);
-		title.setTextColor(Color.DKGRAY);
-		title.setTextSize(18.0f);
 
-        Uri uri = getIntent().getData();
-
-        if (uri == null) {
-			TLog.d(TAG, "The Intent's data was null.");
-            showNoteNotFoundDialog(uri);
-        } else handleNoteUri(uri);
+		// this we will call on resume as well.
+		updateTextAttributes();
+        uri = getIntent().getData();
     }
 
-    private void handleNoteUri(final Uri uri) {// We were triggered by an Intent URI
+	private void handleNoteUri(final Uri uri) {// We were triggered by an Intent URI
         TLog.d(TAG, "ViewNote started: Intent-filter triggered.");
 
         // TODO validate the good action?
@@ -105,6 +104,7 @@ public class ViewNote extends Activity {
         note = NoteManager.getNote(this, uri);
 
         if(note != null) {
+			title.setText((CharSequence) note.getTitle());
             noteContent = note.getNoteContent(noteContentHandler);
         } else {
             TLog.d(TAG, "The note {0} doesn't exist", uri);
@@ -149,36 +149,90 @@ public class ViewNote extends Activity {
 
 	@Override
 	public void onResume(){
+		TLog.v(TAG, "resume view note");
 		super.onResume();
-		SyncManager.setActivity(this);
-		SyncManager.setHandler(this.syncMessageHandler);
-	}
 
+        if (uri == null) {
+			TLog.d(TAG, "The Intent's data was null.");
+            showNoteNotFoundDialog(uri);
+        } else handleNoteUri(uri);
+		updateTextAttributes();
+	}
+	
+	private void updateTextAttributes() {
+		float baseSize = Float.parseFloat(Preferences.getString(Preferences.Key.BASE_TEXT_SIZE));
+		content.setTextSize(baseSize);
+		title.setTextSize(baseSize*1.3f);
+
+		title.setTextColor(Color.BLUE);
+		title.setPaintFlags(title.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+		title.setBackgroundColor(0xffffffff);
+
+		content.setBackgroundColor(0xffffffff);
+		content.setTextColor(Color.DKGRAY);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Create the menu based on what is defined in res/menu/noteview.xml
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.view_note, menu);
-		return true;
-
+		
+        // Calling super after populating the menu is necessary here to ensure that the
+        // action bar helpers have a chance to handle this event.
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+	        case android.R.id.home:
+	        	// app icon in action bar clicked; go home
+                Intent intent = new Intent(this, Tomdroid.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            	return true;
+			case R.id.menuPrefs:
+				startActivity(new Intent(this, PreferencesActivity.class));
+				return true;
 			case R.id.view_note_send:
 				(new Send(this, note)).send();
 				return true;
+			case R.id.view_note_edit:
+				startEditNote();
+				return true;
+			case R.id.view_note_delete:
+				deleteNote();
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void deleteNote() {
+		final Activity activity = this;
+		new AlertDialog.Builder(this)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setTitle(R.string.delete_note)
+        .setMessage(R.string.delete_message)
+        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+        		note.getGuid();
+        		NoteManager.deleteNote(activity, note);
+        		Toast.makeText(activity, getString(R.string.messageNoteDeleted), Toast.LENGTH_SHORT).show();
+        		activity.finish();
+            }
+
+        })
+        .setNegativeButton(R.string.no, null)
+        .show();
 	}
 
 	private void showNote() {
 
 		// show the note (spannable makes the TextView able to output styled text)
 		content.setText(noteContent, TextView.BufferType.SPANNABLE);
-		title.setText((CharSequence) note.getTitle());
 
 		// add links to stuff that is understood by Android except phone numbers because it's too aggressive
 		// TODO this is SLOWWWW!!!!
@@ -190,11 +244,15 @@ public class ViewNote extends Activity {
 		// This will create a link every time a note title is found in the text.
 		// The pattern contains a very dumb (title1)|(title2) escaped correctly
 		// Then we transform the url from the note name to the note id to avoid characters that mess up with the URI (ex: ?)
-		Linkify.addLinks(content,
-						 buildNoteLinkifyPattern(),
-						 Tomdroid.CONTENT_URI+"/",
-						 null,
-						 noteTitleTransformFilter);
+		Pattern pattern = buildNoteLinkifyPattern();
+
+		if(pattern != null)
+			Linkify.addLinks(content,
+							 buildNoteLinkifyPattern(),
+							 Tomdroid.CONTENT_URI+"/",
+							 null,
+							 noteTitleTransformFilter);
+
 	}
 
 	private Handler noteContentHandler = new Handler() {
@@ -241,12 +299,17 @@ public class ViewNote extends Activity {
 
 			do {
 				title = cursor.getString(cursor.getColumnIndexOrThrow(Note.TITLE));
-
+				if(title.length() == 0)
+					continue;
 				// Pattern.quote() here make sure that special characters in the note's title are properly escaped
 				sb.append("("+Pattern.quote(title)+")|");
 
 			} while (cursor.moveToNext());
 
+			// if only empty titles, return
+			if (sb.length() == 0)
+				return null;
+			
 			// get rid of the last | that is not needed (I know, its ugly.. better idea?)
 			String pt = sb.substring(0, sb.length()-1);
 
@@ -274,4 +337,10 @@ public class ViewNote extends Activity {
 			return Tomdroid.CONTENT_URI.toString()+"/"+id;
 		}
 	};
+
+    protected void startEditNote() {
+		final Intent i = new Intent(Intent.ACTION_VIEW, uri, this, EditNote.class);
+		startActivity(i);
+	}
+	
 }

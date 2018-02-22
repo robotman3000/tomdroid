@@ -23,15 +23,16 @@
  */
 package org.tomdroid.ui;
 
-import android.app.ListActivity;
+import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.SearchRecentSuggestions;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -39,20 +40,17 @@ import android.widget.TextView;
 import org.tomdroid.Note;
 import org.tomdroid.NoteManager;
 import org.tomdroid.R;
-import org.tomdroid.sync.SyncManager;
+import org.tomdroid.ui.actionbar.ActionBarListActivity;
 import org.tomdroid.util.SearchSuggestionProvider;
 import org.tomdroid.util.TLog;
 
-public class Search extends ListActivity {
+public class Search extends ActionBarListActivity {
 	
 	// Logging info
 	private static final String	TAG					= "Tomdroid Search";
-	// UI elements
-	private TextView title;
 	// UI to data model glue
 	private TextView			listEmptyView;	
 	// UI feedback handler
-	private Handler	syncMessageHandler	= new SyncMessageHandler(this);
 
 	private ListAdapter			adapter;
 
@@ -61,12 +59,7 @@ public class Search extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.search);
-	    
-		title = (TextView) findViewById(R.id.title);
-		title.setTextColor(Color.DKGRAY);
-		title.setTextSize(18.0f);
-		title.setText((CharSequence) getString(R.string.SearchResultTitle));
-	    	    
+
 	    handleIntent(getIntent());
 	}
 
@@ -97,7 +90,7 @@ public class Search extends ListActivity {
 		
 		
 		// adapter that binds the ListView UI to the notes in the note manager
-		adapter = NoteManager.getListAdapter(this, query);
+		adapter = NoteManager.getListAdapterForSearchResults(this, query);
 		setListAdapter(adapter);
 		
 		// set the view shown when query not found
@@ -106,13 +99,39 @@ public class Search extends ListActivity {
 		getListView().setEmptyView(listEmptyView);
 	}
 	
+	@TargetApi(11)
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Create the menu based on what is defined in res/menu/main.xml
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.search, menu);
+
+        // Calling super after populating the menu is necessary here to ensure that the
+        // action bar helpers have a chance to handle this event.
+		return super.onCreateOptionsMenu(menu);
+
+	}
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+        	case android.R.id.home:
+        		// app icon in action bar clicked; go home
+                Intent intent = new Intent(this, Tomdroid.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            	return true;
+				
+			case R.id.menuSearch:
+				startSearch(null, false, null, false);
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-
-		Cursor item = (Cursor) adapter.getItem(position);
-		int noteId = item.getInt(item.getColumnIndexOrThrow(Note.ID));
-
-		Uri intentUri = Tomdroid.getNoteIntentUri(noteId);
+        Uri intentUri = Tomdroid.getNoteIntentUri(((Note) adapter.getItem(position)).getDbId());
 		Intent i = new Intent(Intent.ACTION_VIEW, intentUri, this, ViewNote.class);
 		startActivity(i);
 	}
@@ -120,7 +139,5 @@ public class Search extends ListActivity {
 	@Override
 	public void onResume(){
 		super.onResume();
-		SyncManager.setActivity(this);
-		SyncManager.setHandler(this.syncMessageHandler);
 	}
 }

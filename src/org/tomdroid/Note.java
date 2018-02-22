@@ -30,9 +30,11 @@ import android.util.TimeFormatException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.tomdroid.util.NoteContentBuilder;
-import org.tomdroid.util.TLog;
 import org.tomdroid.util.XmlUtils;
 
+import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,31 +45,34 @@ public class Note {
 	public static final String GUID = "guid";
 	public static final String TITLE = "title";
 	public static final String MODIFIED_DATE = "modified_date";
-	public static final String URL = "url";
 	public static final String FILE = "file";
 	public static final String TAGS = "tags";
 	public static final String NOTE_CONTENT = "content";
 	
-	// Logging info
-	private static final String TAG = "Note";
-	
 	// Notes constants
-	// TODO this is a weird yellow that was usable for the android emulator, I must confirm this for real usage
-	public static final int NOTE_HIGHLIGHT_COLOR = 0xFFFFFF77;
+	public static final int NOTE_HIGHLIGHT_COLOR = 0x99FFFF00; // lowered alpha to show cursor
 	public static final String NOTE_MONOSPACE_TYPEFACE = "monospace";
-	public static final float NOTE_SIZE_SMALL_FACTOR = 1.0f;
+	public static final float NOTE_SIZE_SMALL_FACTOR = 0.8f;
 	public static final float NOTE_SIZE_LARGE_FACTOR = 1.5f;
 	public static final float NOTE_SIZE_HUGE_FACTOR = 1.8f;
-	
-	// Members
-	private SpannableStringBuilder noteContent;
-	private String xmlContent;
-	private String url;
+
+    private String xmlContent;
 	private String fileName;
 	private String title;
-	private String tags;
+	private HashSet<String> tags = new HashSet<String>();
 	private Time lastChangeDate;
 	private int dbId;
+
+	// Unused members (for SD Card)
+	
+	public Time createDate = new Time();
+	public int cursorPos = 0;
+	public int height = 0;
+	public int width = 0;
+	public int X = -1;
+	public int Y = -1;
+
+	
 	// TODO before guid were of the UUID object type, now they are simple strings 
 	// but at some point we probably need to validate their uniqueness (per note collection or universe-wide?) 
 	private String guid;
@@ -79,41 +84,41 @@ public class Note {
 			".+" + 														// matches what we are getting rid of
 			"([-\\+]\\d{2}:\\d{2})");									// matches timezone (-xx:xx or +xx:xx)
 	
-	public Note() {
-		tags = new String();
-	}
-	
 	public Note(JSONObject json) {
 		
 		// These methods return an empty string if the key is not found
 		setTitle(XmlUtils.unescape(json.optString("title")));
 		setGuid(json.optString("guid"));
 		setLastChangeDate(json.optString("last-change-date"));
-		setXmlContent(json.optString("note-content"));
+		String newXMLContent = json.optString("note-content");
+		setXmlContent(newXMLContent);
 		JSONArray jtags = json.optJSONArray("tags");
-		String tag;
-		tags = new String();
-		if (jtags != null) {
-			for (int i = 0; i < jtags.length(); i++ ) {
-				tag = jtags.optString(i);
-				tags += tag + ",";
-			}
-		}
-	}
-	
-	public String getTags() {
+        if (jtags == null) return;
+        for (int i = 0; i < jtags.length(); i++ ) tags.add(jtags.optString(i));
+    }
+
+    public Note() {}
+
+    public HashSet<String> getTags() {
 		return tags;
 	}
 
-	public String getUrl() {
-		return url;
+    public String getTagsCommaSeparated() {
+        StringBuilder sb = new StringBuilder();
+        Iterator<String> tagsIterator = tags.iterator();
+        while (tagsIterator.hasNext()) sb.append(tagsIterator.next()).append(tagsIterator.hasNext() ? "," : "");
+        return sb.toString();
+    }
+	
+	public void setTags(HashSet<String> tags) {
+		this.tags = tags;
+	}
+	
+	public void addTag(String tag) {
+        tags.add(tag);
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getFileName() {
+    public String getFileName() {
 		return fileName;
 	}
 
@@ -144,9 +149,9 @@ public class Note {
 		// Tomboy's (C# library) format: 2010-01-23T12:07:38.7743020-05:00
 		Matcher m = dateCleaner.matcher(lastChangeDateStr);
 		if (m.find()) {
-			TLog.d(TAG, "I had to clean out extra sub-milliseconds from the date");
+			//TLog.d(TAG, "I had to clean out extra sub-milliseconds from the date");
 			lastChangeDateStr = m.group(1)+m.group(2);
-			TLog.v(TAG, "new date: {0}", lastChangeDateStr);
+			//TLog.v(TAG, "new date: {0}", lastChangeDateStr);
 		}
 		
 		lastChangeDate = new Time();
@@ -173,8 +178,7 @@ public class Note {
 	public SpannableStringBuilder getNoteContent(Handler handler) {
 		
 		// TODO not sure this is the right place to do this
-		noteContent = new NoteContentBuilder().setCaller(handler).setInputSource(xmlContent).setTitle(this.getTitle()).build();
-		return noteContent;
+        return new NoteContentBuilder().setCaller(handler).setInputSource(xmlContent).setTitle(this.getTitle()).build();
 	}
 	
 	public String getXmlContent() {
@@ -187,8 +191,7 @@ public class Note {
 
 	@Override
 	public String toString() {
-
-		return new String("Note: "+ getTitle() + " (" + getLastChangeDate() + ")");
+		return MessageFormat.format("Note: {0} ({1})", getTitle(), getLastChangeDate());
 	}
 	
 }
