@@ -184,7 +184,7 @@ public class Receive extends ActionBarActivity {
 			}
 		}
 		else { // ordinary text file
-			remoteNote = NewNote.createNewNote(this, file.getName().replaceFirst("\\.[^.]+$", ""), XmlUtils.escape(contents));
+			remoteNote = NewNote.createNewNote(file.getName().replaceFirst("\\.[^.]+$", ""), XmlUtils.escape(contents));
 		}
 
 		remoteNote.setFileName(file.getAbsolutePath());
@@ -205,7 +205,7 @@ public class Receive extends ActionBarActivity {
 			bundle.putString("guid",remoteNote.getGuid());
 			bundle.putString("date",remoteNote.getLastChangeDate().formatTomboy());
 			bundle.putString("content", remoteNote.getXmlContent());
-			bundle.putString("tags", remoteNote.getTags());
+			bundle.putSerializable("tags", remoteNote.getTags());
 			bundle.putInt("datediff", compareBoth);
 			bundle.putBoolean("noRemote", true);
 			
@@ -262,7 +262,7 @@ public class Receive extends ActionBarActivity {
 			String validTitle = NoteManager.validateNoteTitle(this, sharedTitle, UUID.randomUUID().toString());
 			
 	    	// add a new note
-			Note note = NewNote.createNewNote(this, validTitle, newXmlContent);
+			Note note = NewNote.createNewNote(validTitle, newXmlContent);
 			Uri uri = NoteManager.putNote(this, note);
 			
 			// view new note

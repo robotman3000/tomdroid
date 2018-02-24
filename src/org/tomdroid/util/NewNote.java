@@ -24,7 +24,6 @@ package org.tomdroid.util;
 
 import org.tomdroid.Note;
 import java.util.UUID;
-import android.content.Context;
 
 
 /**
@@ -37,7 +36,7 @@ public class NewNote {
 	private static final String	TAG = "NewNote";
 	// indicates, if note was never saved before (for dismiss dialogue)
 	
-	public static Note createNewNote(Context context, String title, String xmlContent) {
+	public static Note createNewNote(String title, String xmlContent) {
 		TLog.v(TAG, "Creating new note");
 		
 		Note note = new Note();
@@ -51,5 +50,12 @@ public class NewNote {
 		
 		return note;
 	}
+
+	public static Note createNewNoteInNotebook(String notebookName, String title, String xmlContent) {
+	    Note note = createNewNote(title, xmlContent);
+	    note.addTag("system:notebook:" + notebookName);
+	    return note;
+	}
+
 
 }

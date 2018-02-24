@@ -35,6 +35,10 @@ import org.tomdroid.xml.NoteContentBuilder;
 import org.tomdroid.xml.XmlUtils;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.text.MessageFormat;
+
 public class Note implements Serializable {
 
 	/**
@@ -46,7 +50,6 @@ public class Note implements Serializable {
 	public static final String GUID = "guid";
 	public static final String TITLE = "title";
 	public static final String MODIFIED_DATE = "modified_date";
-	public static final String URL = "url";
 	public static final String FILE = "file";
 	public static final String TAGS = "tags";
 	public static final String NOTE_CONTENT = "content";
@@ -61,12 +64,10 @@ public class Note implements Serializable {
 	public static final float NOTE_SIZE_HUGE_FACTOR = 1.8f;
 	
 	// Members
-	private SpannableStringBuilder noteContent;
-	private String xmlContent;
-	private String url;
 	private String fileName;
 	private String title;
-	private String tags = "";
+	private String xmlContent;
+	private HashSet<String> tags = new HashSet<String>();
 	private String lastChangeDate;
 	private int dbId;
 
@@ -83,14 +84,9 @@ public class Note implements Serializable {
 	// TODO before guid were of the UUID object type, now they are simple strings 
 	// but at some point we probably need to validate their uniqueness (per note collection or universe-wide?) 
 	private String guid;
-	
-	// this is to tell the sync service to update the last date after pushing this note
-	public boolean lastSync = false;
-	
-	public Note() {
-		tags = new String();
-	}
-	
+
+	public Note(){}
+
 	public Note(JSONObject json) {
 		
 		// These methods return an empty string if the key is not found
@@ -100,48 +96,41 @@ public class Note implements Serializable {
 		String newXMLContent = json.optString("note-content");
 		setXmlContent(newXMLContent);
 		JSONArray jtags = json.optJSONArray("tags");
-		String tag;
-		tags = new String();
-		if (jtags != null) {
-			for (int i = 0; i < jtags.length(); i++ ) {
-				tag = jtags.optString(i);
-				tags += tag + ",";
-			}
-		}
+
+        if (jtags == null) return;
+        for (int i = 0; i < jtags.length(); i++ ) tags.add(jtags.optString(i));
 	}
 
-	public String getTags() {
+	public HashSet<String> getTags() {
 		return tags;
 	}
-	
-	public void setTags(String tags) {
+
+	public String getTagsCommaSeparated() {
+        StringBuilder sb = new StringBuilder();
+        Iterator<String> tagsIterator = tags.iterator();
+        while (tagsIterator.hasNext()) sb.append(tagsIterator.next()).append(tagsIterator.hasNext() ? "," : "");
+        return sb.toString();
+    }
+
+    @Deprecated
+    public void setTagsFromString(String tagStr){
+        // TODO: robotman3000: Quick fix
+        HashSet<String> tags = new HashSet<>();
+        for (String value : tagStr.split(",")){
+            tags.add(value);
+        }
+    }
+
+	public void setTags(HashSet<String> tags) {
 		this.tags = tags;
 	}
 	
 	public void addTag(String tag) {
-		if(tags.length() > 0)
-			this.tags = this.tags+","+tag;
-		else
-			this.tags = tag;
+	    tags.add(tag);
 	}
 	
 	public void removeTag(String tag) {
-		
-		String[] taga = TextUtils.split(this.tags, ",");
-		String newTags = "";
-		for(String atag : taga){
-			if(!atag.equals(tag))
-				newTags += atag;
-		}
-		this.tags = newTags;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
+        tags.remove(tag);
 	}
 
 	public String getFileName() {
@@ -214,8 +203,7 @@ public class Note implements Serializable {
 	public SpannableStringBuilder getNoteContent(Handler handler) {
 		
 		// TODO not sure this is the right place to do this
-		noteContent = new NoteContentBuilder().setCaller(handler).setInputSource(xmlContent).setTitle(this.getTitle()).build();
-		return noteContent;
+		return new NoteContentBuilder().setCaller(handler).setInputSource(xmlContent).setTitle(this.getTitle()).build();
 	}
 	
 	public String getXmlContent() {
@@ -228,8 +216,7 @@ public class Note implements Serializable {
 
 	@Override
 	public String toString() {
-
-		return new String("Note: "+ getTitle() + " (" + getLastChangeDate() + ")");
+        return MessageFormat.format("Note: {0} ({1})", getTitle(), getLastChangeDate());
 	}
 	
 	// gets full xml to be exported as .note file
@@ -237,10 +224,9 @@ public class Note implements Serializable {
 		
 		String tagString = "";
 
-		if(tags.length()>0) {
-			String[] tagsA = tags.split(",");
+		if(!tags.isEmpty()) {
 			tagString = "\n\t<tags>";
-			for(String atag : tagsA) {
+			for(String atag : tags) {
 				tagString += "\n\t\t<tag>"+atag+"</tag>"; 
 			}
 			tagString += "\n\t</tags>"; 

@@ -25,6 +25,7 @@
 package org.tomdroid.ui;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -90,16 +91,10 @@ public class CompareNotes extends ActionBarActivity {
 		remoteNote.setTitle(extras.getString("title"));
 		remoteNote.setGuid(extras.getString("guid"));
 		remoteNote.setLastChangeDate(extras.getString("date"));
-		remoteNote.setXmlContent(extras.getString("content"));	
-		remoteNote.setTags(extras.getString("tags"));
-		
-		ContentValues values = new ContentValues();
-		values.put(Note.TITLE, extras.getString("title"));
-		values.put(Note.FILE, extras.getString("file"));
-		values.put(Note.GUID, extras.getString("guid"));
-		values.put(Note.MODIFIED_DATE, extras.getString("date"));
-		values.put(Note.NOTE_CONTENT, extras.getString("content"));
-		values.put(Note.TAGS, extras.getString("tags"));
+		remoteNote.setXmlContent(extras.getString("content"));
+		@SuppressWarnings("unchecked")
+		HashSet<String> tags = (HashSet<String>) extras.getSerializable("tags");
+		remoteNote.setTags(tags);
 		 
 		dateDiff = extras.getInt("datediff");
 		noRemote = extras.getBoolean("noRemote");

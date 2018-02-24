@@ -412,7 +412,7 @@ public abstract class SyncService {
 			bundle.putString("guid",remoteNote.getGuid());
 			bundle.putString("date",remoteNote.getLastChangeDate().formatTomboy());
 			bundle.putString("content", remoteNote.getXmlContent());
-			bundle.putString("tags", remoteNote.getTags());
+			bundle.putSerializable("tags", remoteNote.getTags());
 			bundle.putInt("datediff", compareBoth);
 			
 			// put local guid if conflicting titles

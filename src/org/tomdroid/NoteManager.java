@@ -34,7 +34,7 @@ import android.text.Html;
 import android.widget.ListAdapter;
 
 import org.tomdroid.ui.Tomdroid;
-import org.tomdroid.util.NoteListCursorAdapter;
+import org.tomdroid.util.NoteListAdapter;
 import org.tomdroid.util.Preferences;
 import org.tomdroid.util.TLog;
 import org.tomdroid.util.Time;
@@ -42,6 +42,10 @@ import org.tomdroid.xml.XmlUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,10 +58,10 @@ public class NoteManager {
 	public static final String[] TITLE_PROJECTION = { Note.TITLE, Note.GUID };
 	public static final String[] GUID_PROJECTION = { Note.ID, Note.GUID };
 	public static final String[] ID_PROJECTION = { Note.ID };
-	public static final String[] EMPTY_PROJECTION = {};
 	
 	// static properties
 	private static final String TAG = "NoteManager";
+	public static final Pattern NOTEBOOK_PATTERN = Pattern.compile("system:notebook:([^,]*)(,|$)");
  	
 	private static String sortOrder;
 
@@ -141,36 +145,12 @@ public class NoteManager {
 			note.setTitle(noteTitle);
 			note.setXmlContent(stripTitleFromContent(noteContent, noteTitle));
 			note.setLastChangeDate(noteChangeDate);
-			note.setTags(noteTags);
+			note.setTagsFromString(noteTags);
 			note.setGuid(noteGUID);
 			note.setDbId(noteDbid);
 		}
 		cursor.close();
 		return note;
-	}
-
-	// check in a note exists in the content provider
-	public static boolean noteExists(Activity activity, String guid) {
-		Uri notes = Tomdroid.CONTENT_URI;
-		
-		String[] whereArgs = new String[1];
-		whereArgs[0] = guid;
-		
-		// The note identifier is the guid
-		ContentResolver cr = activity.getContentResolver();
-		Cursor cursor = cr.query(notes,
-                ID_PROJECTION,  
-                Note.GUID + "= ?",
-                whereArgs,
-                null);
-		activity.startManagingCursor(cursor);
-		
-		boolean returnvalue = false;
-		if (cursor != null && cursor.getCount() != 0) {
-			returnvalue = true;
-		}
-		cursor.close();
-		return returnvalue;
 	}
 	
 	public static Uri getUriByGuid (Activity activity,  String guid) {
@@ -207,12 +187,12 @@ public class NoteManager {
 		ContentValues values = new ContentValues();
 		values.put(Note.TITLE, title);
 		values.put(Note.FILE, note.getFileName());
-		values.put(Note.GUID, note.getGuid().toString());
+		values.put(Note.GUID, note.getGuid());
 		// Notice that we store the date in UTC because sqlite doesn't handle RFC3339 timezone information
 		values.put(Note.MODIFIED_DATE, note.getLastChangeDate().formatTomboy());
 		values.put(Note.NOTE_CONTENT, xmlContent);
 		values.put(Note.NOTE_CONTENT_PLAIN, plainContent);
-		values.put(Note.TAGS, note.getTags());
+		values.put(Note.TAGS, note.getTagsCommaSeparated());
 		
 		Uri uri = null;
 		
@@ -259,6 +239,7 @@ public class NoteManager {
 		note.setLastChangeDate(now);
 		putNote(activity,note);
 	}
+
 	public static void deleteNote(Activity activity, String guid)
 	{
 		Note note = getNoteByGuid(activity,guid);
@@ -273,11 +254,7 @@ public class NoteManager {
 		ContentResolver cr = activity.getContentResolver();
 		int result = cr.delete(uri, null, null);
 		
-		if(result > 0) {
-			return true;
-		}
-		else 
-			return false;
+		return result > 0;
 	}
 
 	// this function deletes deleted notes - if they never existed on the server, we still delete them at sync
@@ -356,7 +333,7 @@ public class NoteManager {
 	}	
 
 	public static ListAdapter getListAdapter(Activity activity, String querys, int selectedIndex) {
-		
+        //TODO: robotman3000: This may need debugging
 		boolean includeNotebookTemplates = Preferences.getBoolean(Preferences.Key.INCLUDE_NOTE_TEMPLATES);
 		boolean includeDeletedNotes = Preferences.getBoolean(Preferences.Key.INCLUDE_DELETED_NOTES);
 		
@@ -403,9 +380,7 @@ public class NoteManager {
 		activity.startManagingCursor(notesCursor);
 		
 		// set up an adapter binding the TITLE field of the cursor to the list item
-		String[] from = new String[] { Note.TITLE };
-		int[] to = new int[] { R.id.note_title };
-		return new NoteListCursorAdapter(activity, R.layout.main_list_item, notesCursor, from, to, selectedIndex);
+        return new NoteListAdapter(activity, notesListFromCursor(notesCursor), selectedIndex);
 	}
 	
 	public static ListAdapter getListAdapter(Activity activity, int selectedIndex) {
@@ -420,6 +395,65 @@ public class NoteManager {
 		
 		return getListAdapter(activity, null, -1);
 	}
+
+    private static LinkedList<Note> notesListFromCursor(Cursor notesCursor) {
+        LinkedList<Note> notes = new LinkedList<Note>();
+        for (notesCursor.moveToFirst(); !notesCursor.isAfterLast(); notesCursor.moveToNext()) {
+            notes.add(noteFromListProjectionRow(notesCursor));
+        }
+        return notes;
+    }
+
+    public static ListAdapter getListAdapterForListActivity(Activity activity, int aposition) {
+        StringBuilder where = getBaseNoteQueryWhereClause();
+
+        Cursor notesCursor = activity.managedQuery(Tomdroid.CONTENT_URI, LIST_PROJECTION, where.toString(), null, null);
+
+        TreeSet<String> notebooks = new TreeSet<String>();
+        List<Note> notes = new LinkedList<Note>();
+
+        int tagsColumn = notesCursor.getColumnIndex(Note.TAGS);
+
+        for (notesCursor.moveToFirst(); !notesCursor.isAfterLast(); notesCursor.moveToNext()) {
+            Matcher matcher = NOTEBOOK_PATTERN.matcher(notesCursor.getString(tagsColumn));
+            if (matcher.matches()) notebooks.add(matcher.group(1));
+            else notes.add(noteFromListProjectionRow(notesCursor));
+        }
+
+        return new NoteListAdapter(activity, new LinkedList<String>(notebooks), notes, aposition); //TODO: robotman3000: use the correct selectedIndex
+    }
+
+    public static ListAdapter getListAdapterForNotebookListActivity(Activity activity, String notebookName, int aposition) {
+        StringBuilder where = getBaseNoteQueryWhereClause();
+        where.append(" AND tags LIKE '%system:notebook:").append(notebookName).append("%'");
+        Cursor notesCursor = activity.managedQuery(Tomdroid.CONTENT_URI, LIST_PROJECTION, where.toString(), null, null);
+        return new NoteListAdapter(activity, notesListFromCursor(notesCursor), aposition); //TODO: robotman3000: use the correct selectedIndex
+    }
+
+    private static Note noteFromListProjectionRow(Cursor notesCursor) {
+        int idColumn = notesCursor.getColumnIndex(Note.ID);
+        int titleColumn = notesCursor.getColumnIndex(Note.TITLE);
+        int modifiedColumn = notesCursor.getColumnIndex(Note.MODIFIED_DATE);
+        int tagsColumn = notesCursor.getColumnIndex(Note.TAGS);
+
+        Note note = new Note();
+        note.setDbId(notesCursor.getInt(idColumn));
+        note.setTitle(notesCursor.getString(titleColumn));
+        note.setLastChangeDate(notesCursor.getString(modifiedColumn));
+        String tags = notesCursor.getString(tagsColumn);
+        note.setTagsFromString(tags);
+        return note;
+    }
+
+    private static StringBuilder getBaseNoteQueryWhereClause() {
+        StringBuilder where = new StringBuilder("(").append(Note.TAGS).append(" NOT LIKE '%system:deleted%')");
+
+        boolean includeNotebookTemplates = Preferences.getBoolean(Preferences.Key.INCLUDE_NOTE_TEMPLATES);
+        if (!includeNotebookTemplates) {
+            where.append(" AND (").append(Note.TAGS).append(" NOT LIKE '%system:template%')");
+        }
+        return where;
+    }
 
 	// gets the titles of the notes present in the db, used in ViewNote.buildLinkifyPattern()
 	public static Cursor getTitles(Activity activity) {
@@ -510,9 +544,7 @@ public class NoteManager {
 	 * @param activity
 	 */
 	public static Cursor getNewNotes(Activity activity) {
-		Cursor cursor = activity.managedQuery(Tomdroid.CONTENT_URI, DATE_PROJECTION, "strftime('%s', "+Note.MODIFIED_DATE+") > strftime('%s', '"+Preferences.getString(Preferences.Key.LATEST_SYNC_DATE)+"')", null, null);	
-				
-		return cursor;
+        return activity.managedQuery(Tomdroid.CONTENT_URI, DATE_PROJECTION, "strftime('%s', "+Note.MODIFIED_DATE+") > strftime('%s', '"+Preferences.getString(Preferences.Key.LATEST_SYNC_DATE)+"')", null, null);
 	}
 
 	/**

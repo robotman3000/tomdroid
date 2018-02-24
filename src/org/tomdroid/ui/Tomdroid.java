@@ -26,6 +26,8 @@
 package org.tomdroid.ui;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,6 +42,7 @@ import org.tomdroid.ui.actionbar.ActionBarListActivity;
 import org.tomdroid.util.FirstNote;
 import org.tomdroid.util.Honeycomb;
 import org.tomdroid.util.NewNote;
+import org.tomdroid.util.NoteListAdapter;
 import org.tomdroid.util.NoteViewShortcutsHelper;
 import org.tomdroid.util.Preferences;
 import org.tomdroid.util.Receive;
@@ -101,6 +104,7 @@ public class Tomdroid extends ActionBarListActivity {
 	public static final String CALLED_FROM_SHORTCUT_EXTRA = "org.tomdroid.CALLED_FROM_SHORTCUT";
     public static final String IS_NEW_NOTE_EXTRA = "org.tomdroid.IS_NEW_NOTE";
 	public static final String SHORTCUT_NAME 		= "org.tomdroid.SHORTCUT_NAME";
+	public static final String NOTEBOOK_NAME_EXTRA = "org.tomdroid.NOTEBOOK_NAME";
 	
     private static final int DIALOG_SYNC = 0;
 	private static final int DIALOG_ABOUT = 1;
@@ -144,10 +148,10 @@ public class Tomdroid extends ActionBarListActivity {
         return Uri.parse(CONTENT_URI + "/" + noteId);
     }
 
-	private View main;
+	//////private View main;
 	
 	// UI to data model glue
-	private TextView			listEmptyView;
+	//////private TextView			listEmptyView;
 	private ListAdapter			adapter;
 
 	// UI feedback handler
@@ -172,7 +176,6 @@ public class Tomdroid extends ActionBarListActivity {
 	private SpannableStringBuilder noteContent;
 	private Uri uri;
 	private int lastIndex = -1;
-	public MenuItem syncMenuItem;
 	public static Tomdroid context;
 
 	// for searches
@@ -190,10 +193,7 @@ public class Tomdroid extends ActionBarListActivity {
 		context = this;
 		SyncManager.setActivity(this);
 		SyncManager.setHandler(this.syncMessageHandler);
-		
-        main =  View.inflate(this, R.layout.main, null);
-		
-        setContentView(main);
+        setContentView(R.layout.main);
 		
 		// get the Path to the notes-folder from Preferences
         if (Preferences.getString(Preferences.Key.SD_LOCATION).startsWith("/")) {
@@ -761,12 +761,12 @@ public class Tomdroid extends ActionBarListActivity {
 			    break;
 		    case DIALOG_VIEW_TAGS:
 		    	((AlertDialog) dialog).setTitle(String.format(getString(R.string.note_x_tags),dialogNote.getTitle()));
-		    	dialogInput.setText(dialogNote.getTags());
+		    	dialogInput.setText(dialogNote.getTagsCommaSeparated());
 
 		    	((AlertDialog) dialog).setButton(Dialog.BUTTON_POSITIVE, getString(R.string.btnOk), new DialogInterface.OnClickListener() {
 		    		public void onClick(DialogInterface dialog, int whichButton) {
-		    			String value = dialogInput.getText().toString();
-			    		dialogNote.setTags(value);
+		    			String tags = dialogInput.getText().toString();
+			    		dialogNote.setTagsFromString(tags);
 			    		dialogNote.setLastChangeDate();
 						NoteManager.putNote(activity, dialogNote);
 						removeDialog(DIALOG_VIEW_TAGS);
@@ -779,26 +779,37 @@ public class Tomdroid extends ActionBarListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		if (rightPane != null) {
-			if(position == lastIndex) // same index, edit
-				this.startEditNote();
-			else
-				showNoteInPane(position);
-		}
-		else {
-			Cursor item = (Cursor) adapter.getItem(position);
-			long noteId = item.getInt(item.getColumnIndexOrThrow(Note.ID));
-				this.ViewNote(noteId);
-		}
+        boolean notebookClicked = adapter.getItemViewType(position) == NoteListAdapter.NOTEBOOK_TYPE;
+        if (notebookClicked) handleNotebookListItemClicked((String) adapter.getItem(position));
+        else handleNoteListItemClick(position);
 	}
-	
+
+	private void handleNotebookListItemClicked(String name) {
+        final Intent i = new Intent(this, Tomdroid.class);
+        i.putExtra(NOTEBOOK_NAME_EXTRA, name);
+        startActivity(i);
+    }
+
+    private void handleNoteListItemClick(int position) {
+        if (rightPane != null) {
+            if(position == lastIndex) // same index, edit
+               this.startEditNote();
+            else
+               showNoteInPane(position);
+        } else {
+            Note item = (Note) adapter.getItem(position);
+            long noteId = item.getDbId();
+            this.ViewNote(noteId);
+        }
+        lastIndex = position;
+    }
+
 	// called when rotating screen
 	@Override
 	public void onConfigurationChanged(Configuration newConfig)
 	{
 	    super.onConfigurationChanged(newConfig);
-        main =  View.inflate(this, R.layout.main, null);
-        setContentView(main);
+        setContentView(R.layout.main);
 
         if (Build.VERSION.SDK_INT >= 11) {
             Honeycomb.invalidateOptionsMenuWrapper(this); 
@@ -824,14 +835,17 @@ public class Tomdroid extends ActionBarListActivity {
 
 	private void updateNotesList(String aquery, int aposition) {
 	    // adapter that binds the ListView UI to the notes in the note manager
-		adapter = NoteManager.getListAdapter(this, aquery, rightPane != null ? aposition : -1);
-		setListAdapter(adapter);
-		
+        updateAdapter(aquery, aposition);
 	}
+
+	private void updateAdapter(String aquery, int aposition) {
+       adapter = getCorrectAdapter(aquery, aposition);
+       setListAdapter(adapter);
+    }
 	
 	private void updateEmptyList(String aquery) {
 		// set the view shown when the list is empty
-		listEmptyView = (TextView) findViewById(R.id.list_empty);
+		TextView listEmptyView = (TextView) findViewById(R.id.list_empty);
 		if (rightPane == null) {
 			if (aquery != null) {
 				listEmptyView.setText(getString(R.string.strNoResults, aquery)); }
@@ -849,7 +863,14 @@ public class Tomdroid extends ActionBarListActivity {
 		}
 		getListView().setEmptyView(listEmptyView);
 	}
-	
+
+	private ListAdapter getCorrectAdapter(String aquery, int aposition) {
+        String notebookName = getIntent().getStringExtra(NOTEBOOK_NAME_EXTRA);
+        boolean notebookNameFound = notebookName != null && notebookName.length() > 0;
+        if (!notebookNameFound) return NoteManager.getListAdapterForListActivity(this, aposition);
+        else return NoteManager.getListAdapterForNotebookListActivity(this, notebookName, aposition);
+    }
+
 	private void updateTextAttributes() {
 		float baseSize = Float.parseFloat(Preferences.getString(Preferences.Key.BASE_TEXT_SIZE));
 		content.setTextSize(baseSize);
@@ -863,7 +884,7 @@ public class Tomdroid extends ActionBarListActivity {
 		content.setTextColor(Color.DKGRAY);
 	}
 	private void showNoteInPane(int position) {
-		if(rightPane == null)
+/*		if(rightPane == null)
 			return;
 		
 		if(position == -1)
@@ -918,8 +939,44 @@ public class Tomdroid extends ActionBarListActivity {
 		    else
 	            showDialog(DIALOG_NOT_FOUND);
 
+        }*/
+
+        if(rightPane == null)
+            return;
+
+        title.setText("");
+        content.setText("");
+
+        if(position == -1) {
+            updateAdapter(query, 0);
+            position = 0;
         }
-	}
+        Note item = (Note) adapter.getItem(position);
+        uri = Uri.parse(CONTENT_URI + "/" + item.getDbId());
+
+        TLog.d(TAG, "Getting note {0}", position);
+
+        note = NoteManager.getNote(this, uri);
+
+        if(note != null) {
+            TLog.d(TAG, "note {0} found", position);
+            noteContent = new NoteContentBuilder().setCaller(noteContentHandler).setInputSource(note.getXmlContent()).setTitle(note.getTitle()).build();
+        } else {
+            TLog.d(TAG, "The note {0} doesn't exist", uri);
+            final boolean proposeShortcutRemoval;
+            final boolean calledFromShortcut = getIntent().getBooleanExtra(CALLED_FROM_SHORTCUT_EXTRA, false);
+            final String shortcutName = getIntent().getStringExtra(SHORTCUT_NAME);
+            proposeShortcutRemoval = calledFromShortcut && uri != null && shortcutName != null;
+
+            if (proposeShortcutRemoval) {
+                dialogString = shortcutName;
+                showDialog(DIALOG_NOT_FOUND_SHORTCUT);
+            }
+            else
+                showDialog(DIALOG_NOT_FOUND);
+        }
+    }
+
 	private void showNote(boolean xml) {
 		
 		if(xml) {
@@ -1087,8 +1144,15 @@ public class Tomdroid extends ActionBarListActivity {
 	public void newNote() {
 		
 		// add a new note
-		
-		Note note = NewNote.createNewNote(this, "", "");
+        String notebookName = getIntent().getStringExtra(NOTEBOOK_NAME_EXTRA);
+        if (notebookName == null){
+            notebookName = "Default";
+        }
+        boolean notebookNameFound = notebookName != null && notebookName.length() > 0;
+        //Note note = NewNote.createNewNote(this, "", ""); TODO: robotman3000: This may be useful in debugging
+        Note note = notebookNameFound ? NewNote.createNewNoteInNotebook(notebookName, "", "") : NewNote.createNewNote("", "");
+
+
 		Uri uri = NoteManager.putNote(this, note);
 		
 		// recreate listAdapter
