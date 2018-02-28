@@ -439,13 +439,44 @@ public class Tomdroid extends ActionBarListActivity {
                 final NoteViewShortcutsHelper helper = new NoteViewShortcutsHelper(this);
                 sendBroadcast(helper.getBroadcastableCreateShortcutIntent(intentUri, dialogNote.getTitle()));
                 break;
+			case R.id.notebookName:
+				/*notebookName = null;
+				getInput();
+				while (notebookName == null){
+
+				}*/
+				break;
 			default:
 				break;
 		}
 		
 		return super.onContextItemSelected(item);
 	}
-	
+
+	private String notebookName = null;
+	public void getInput(String title, String message, String defaultText){
+		final EditText txtUrl = new EditText(this);
+		txtUrl.setText(defaultText != null ? defaultText : "");
+		new AlertDialog.Builder(this)
+				.setTitle(title != null ? title : "Input Prompt")
+				.setMessage(message != null ? message : "Please input text")
+				.setView(txtUrl)
+				.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						notebookName = txtUrl.getText().toString();
+						if(notebookName == null){
+							notebookName = "";
+						}
+					}
+				})
+				.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						notebookName = "";
+					}
+				})
+				.show();
+	}
+
     @Override
     protected void onDestroy() {
     	SyncManager.getInstance().cancel();
@@ -1290,7 +1321,12 @@ public class Tomdroid extends ActionBarListActivity {
 					message = String.format(message,serviceDescription);
 					Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 					break;
-				
+				case SyncService.UNKNOWN_ERROR:
+					dismiss = true;
+					message = "An unknown error has occured: " + (SyncService.ERROR_MESSAGE != null ? SyncService.ERROR_MESSAGE : "No Error Message Given!");
+					message = String.format(message,serviceDescription);
+					Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+					break;
 				default:
 					break;
 	

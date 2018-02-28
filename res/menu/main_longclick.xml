@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/view" android:id="@+id/view"/>
     <item android:title="@string/edit" android:id="@+id/edit"/>
+    <item
+        android:id="@+id/notebookName"
+        android:title="Notebook"
+        android:visible="false" />
     <item android:title="@string/delete" android:id="@+id/delete"/>
     <item android:title="@string/editTags" android:visible="false" android:id="@+id/tags"/>
     <!-- <item android:title="@string/contextRevert" android:id="@+id/revert"/> -->

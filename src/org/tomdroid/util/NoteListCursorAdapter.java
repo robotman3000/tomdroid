@@ -109,6 +109,10 @@ public class NoteListCursorAdapter extends SimpleCursorAdapter {
             if (note_modified != null) {
             	note_modified.setTextColor(0xFF000000);
             }
+            TextView note_notebook = (TextView) v.findViewById(R.id.note_notebook);
+            if (note_notebook != null) {
+                note_notebook.setTextColor(0xFF000000);
+            }
     		v.setBackgroundResource(0);
     		v.findViewById(R.id.triangle).setBackgroundResource(0);
     	}
@@ -123,7 +127,7 @@ public class NoteListCursorAdapter extends SimpleCursorAdapter {
         
         String title = c.getString(nameCol);
         String tags = c.getString(tagCol);
-        
+
         //Format last modified dates to be similar to desktop Tomboy
         //TODO this is messy - must be a better way than having 3 separate date types
         Time lastModified = new Time();
@@ -161,6 +165,16 @@ public class NoteListCursorAdapter extends SimpleCursorAdapter {
         if (note_modified != null) {
         	note_modified.setText(strModified);
         }
+
+        TextView note_notebook = (TextView) v.findViewById(R.id.note_notebook);
+        note_notebook.setText("Unfiled Notes"); // The default
+        for(String tag : tags.split(",")){
+            if(tag.startsWith("system:notebook")){
+                note_notebook.setText(tag.substring("system:notebook:".length()));
+                break; // No use looking at the other tags
+            }
+        }
+
     }
 
 }

@@ -27,14 +27,29 @@ package org.tomdroid;
 import android.os.Handler;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.util.TimeFormatException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.tomdroid.sync.sd.NoteHandler;
+import org.tomdroid.util.ErrorList;
+import org.tomdroid.util.TLog;
 import org.tomdroid.util.Time;
 import org.tomdroid.xml.NoteContentBuilder;
 import org.tomdroid.xml.XmlUtils;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.StringReader;
+import java.util.regex.Matcher;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 public class Note implements Serializable {
 
 	/**
@@ -231,19 +246,18 @@ public class Note implements Serializable {
 
 		return new String("Note: "+ getTitle() + " (" + getLastChangeDate() + ")");
 	}
-	
+
 	// gets full xml to be exported as .note file
 	public String getXmlFileString() {
-		
 		String tagString = "";
 
 		if(tags.length()>0) {
 			String[] tagsA = tags.split(",");
 			tagString = "\n\t<tags>";
 			for(String atag : tagsA) {
-				tagString += "\n\t\t<tag>"+atag+"</tag>"; 
+				tagString += "\n\t\t<tag>"+atag+"</tag>";
 			}
-			tagString += "\n\t</tags>"; 
+			tagString += "\n\t</tags>";
 		}
 
 		// TODO: create-date
@@ -263,4 +277,36 @@ public class Note implements Serializable {
 		return fileString;
 	}
 
+	public String getNotebookStr() {
+		String notebook = "Unfiled Notes"; // The default
+		for(String tag : tags.split(",")){
+			if(tag.startsWith("system:notebook")){
+				notebook = tag.substring("system:notebook:".length());
+				break; // No use looking at the other tags
+			}
+		}
+		return notebook;
+	}
+
+    public void setNotebook(String notebook) {
+        if(tags.isEmpty()){
+            if(notebook != null && !notebook.isEmpty()){
+                setTags("system:notebook:" + notebook);
+            }
+            return;
+        }
+
+	    StringBuilder newTags = new StringBuilder();
+        for(String tag : tags.split(",")){
+            if(tag.startsWith("system:notebook")){
+                if(notebook != null && !notebook.isEmpty()){
+                    newTags.append("system:notebook:" + notebook + ",");
+                }
+            } else {
+                newTags.append(tag + ",");
+            }
+        }
+        newTags.deleteCharAt(newTags.length() - 1);
+        setTags(newTags.toString());
+    }
 }

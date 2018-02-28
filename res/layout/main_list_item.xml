@@ -22,7 +22,7 @@
  along with Tomdroid.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="10dip"
@@ -49,14 +49,24 @@
 		android:paddingRight="23dp"
 	/>
 
-    <TextView android:id="@+id/note_date"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="42dip"
-        android:layout_below="@+id/note_title"
-		android:textSize="14dp"
+	<TextView
+		android:id="@+id/note_notebook"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/note_title"
+		android:layout_marginLeft="42dip"
 		android:paddingRight="23dp"
-    />
+		android:textSize="14dp" />
+
+	<TextView
+		android:id="@+id/note_date"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/note_notebook"
+		android:layout_marginLeft="42dip"
+		android:paddingRight="23dp"
+		android:textSize="14dp" />
+
 	<View
 		android:id="@+id/triangle"
 		android:layout_width="13dip"

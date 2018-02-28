@@ -88,6 +88,7 @@ public class EditNote extends ActionBarActivity {
 	
 	// UI elements
 	private EditText title;
+	private EditText notebook;
 	private EditText content;
 	private SlidingDrawer formatBar;
 	
@@ -134,6 +135,7 @@ public class EditNote extends ActionBarActivity {
 		
 		content = (EditText) findViewById(R.id.content);
 		title = (EditText) findViewById(R.id.title);
+		notebook = (EditText) findViewById(R.id.notebook);
 		
 		formatBar = (SlidingDrawer) findViewById(R.id.formatBar);
 
@@ -166,6 +168,7 @@ public class EditNote extends ActionBarActivity {
         if(note != null) {
 			title.setText((CharSequence) note.getTitle());
             noteContent = note.getNoteContent(noteContentHandler);
+            notebook.setText(note.getNotebookStr());
         } else {
             TLog.d(TAG, "The note {0} doesn't exist", uri);
             showNoteNotFoundDialog(uri);
@@ -488,6 +491,13 @@ public class EditNote extends ActionBarActivity {
 		String validTitle = NoteManager.validateNoteTitle(this, title.getText().toString(), note.getGuid()); 
 		title.setText(validTitle);
 		note.setTitle(validTitle);
+
+		String newNotebook = notebook.getText().toString();
+		if (newNotebook != null && !newNotebook.isEmpty() && !newNotebook.equals("Unfiled Notes")){
+			note.setNotebook(newNotebook);
+		} else {
+			note.setNotebook(null);
+		}
 
 		note.setLastChangeDate();
 		NoteManager.putNote( this, note);
@@ -824,6 +834,18 @@ public class EditNote extends ActionBarActivity {
                     //unused
             } 
         });
+
+		notebook.addTextChangedListener(new TextWatcher() {
+			public void afterTextChanged(Editable s) {
+				textChanged = true;
+			}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				//unused
+			}
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				//unused
+			}
+		});
 	}
 	
 	private void showSizeDialog() {
