@@ -390,4 +390,5 @@
 	<!-- Launchpad Translation String -->
 	<string name="about_translators">Launchpad Contributions:
   Miroslav Toman https://launchpad.net/~rayiner</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

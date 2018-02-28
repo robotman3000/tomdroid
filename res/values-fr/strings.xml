@@ -401,4 +401,5 @@
   Thomas Housieaux https://launchpad.net/~ykroz62
   londumas https://launchpad.net/~helion331990
   ymadec https://launchpad.net/~ymadec</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

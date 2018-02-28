@@ -400,4 +400,5 @@
   gabrielkowalski https://launchpad.net/~g-kowalski
   mili https://launchpad.net/~mili-f
   rm https://launchpad.net/~r-m333-deactivatedaccount</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

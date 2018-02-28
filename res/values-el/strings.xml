@@ -391,4 +391,5 @@
 	<string name="about_translators">Launchpad Contributions:
   alexxtasi https://launchpad.net/~alexxtasi
   tzem https://launchpad.net/~athmakrigiannis</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

@@ -49,7 +49,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SdCardSyncService extends SyncService {
-	
+
 	public static Pattern note_content = Pattern.compile("<note-content[^>]+>(.*)<\\/note-content>", Pattern.CASE_INSENSITIVE+Pattern.DOTALL);
 
 	// list of notes to sync
@@ -169,8 +169,8 @@ public class SdCardSyncService extends SyncService {
 	 */
 	// TODO change type to callable to be able to throw exceptions? (if you throw make sure to display an alert only once)
 	// http://java.sun.com/j2se/1.5.0/docs/api/java/util/concurrent/Callable.html
-	private class Worker implements Runnable {
-		
+	public class Worker implements Runnable {
+
 		// the note to be loaded and parsed
 		private Note note = new Note();
 		private File file;
@@ -184,11 +184,11 @@ public class SdCardSyncService extends SyncService {
 		}
 
 		public void run() {
-			
+
 			note.setFileName(file.getAbsolutePath());
 			// the note guid is not stored in the xml but in the filename
 			note.setGuid(file.getName().replace(".note", ""));
-			
+
 			// Try reading the file first
 			String contents = "";
 			try {
@@ -203,11 +203,11 @@ public class SdCardSyncService extends SyncService {
 
 			try {
 				// Parsing
-		    	// XML 
+		    	// XML
 		    	// Get a SAXParser from the SAXPArserFactory
 		        SAXParserFactory spf = SAXParserFactory.newInstance();
 		        SAXParser sp = spf.newSAXParser();
-		
+
 		        // Get the XMLReader of the SAXParser we created
 		        XMLReader xr = sp.getXMLReader();
 
@@ -218,7 +218,7 @@ public class SdCardSyncService extends SyncService {
 		        // Create the proper input source
 		        StringReader sr = new StringReader(contents);
 		        InputSource is = new InputSource(sr);
-		        
+
 				TLog.d(TAG, "parsing note. filename: {0}", file.getName());
 				xr.parse(is);
 
@@ -230,7 +230,7 @@ public class SdCardSyncService extends SyncService {
 				onWorkDone();
 				return;
 			}
-			
+
 			// FIXME here we are re-reading the whole note just to grab note-content out, there is probably a better way to do this (I'm talking to you xmlpull.org!)
 			Matcher m = note_content.matcher(contents);
 			if (m.find()) {
@@ -241,11 +241,11 @@ public class SdCardSyncService extends SyncService {
 				onWorkDone();
 				return;
 			}
-			
+
 			syncableNotes.add(note);
 			onWorkDone();
 		}
-		
+
 		private void onWorkDone(){
 			if (isLast) {
 				prepareSyncableNotes(syncableNotes);

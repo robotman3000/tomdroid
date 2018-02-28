@@ -397,4 +397,5 @@
   Stefan Hammer https://launchpad.net/~j-4
   Tarcisio Oliveira https://launchpad.net/~tarcisio
   eniomarconcini https://launchpad.net/~eniorm</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

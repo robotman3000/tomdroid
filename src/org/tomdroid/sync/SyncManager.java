@@ -24,6 +24,7 @@ package org.tomdroid.sync;
 
 import java.util.ArrayList;
 
+import org.tomdroid.sync.dropbox.DropboxSyncService;
 import org.tomdroid.sync.sd.SdCardSyncService;
 import org.tomdroid.sync.ssh.SSHSyncService;
 import org.tomdroid.sync.web.SnowySyncService;
@@ -99,6 +100,7 @@ public class SyncManager {
 		services.add(new SdCardSyncService(activity, handler));
 		services.add(new WebDAVSyncService(activity, handler));
 		services.add(new SSHSyncService(activity, handler));
+		services.add(new DropboxSyncService(activity, handler));
 
 	}
 

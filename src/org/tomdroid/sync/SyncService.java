@@ -41,6 +41,7 @@ import org.tomdroid.util.Time;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -102,6 +103,9 @@ public abstract class SyncService {
 	public final static int SYNC_CANCELLED = 23;
 	public final static int LATEST_REVISION = 24;
 	public final static int SYNC_CONNECTED = 25;
+	public final static int UNKNOWN_ERROR = 31;
+
+	public static String ERROR_MESSAGE = "";
 	
 	// ssh messages
 	public final static int SSH_CONNECT_FAIL = 26;
@@ -199,7 +203,10 @@ public abstract class SyncService {
 		sendMessage(INCREMENT_PROGRESS );
 	}	
 
-	// syncing based on updated local notes only
+	/**syncing based on updated local notes only
+	robotman3000: This perfoms a sync using only the notes on LOCAL that have changed
+	@param localGuids a "list" of all the changed notes on LOCAL
+	*/
 	protected void prepareSyncableNotes(Cursor localGuids) {
 		remoteGuids = new ArrayList<String>();
 		pushableNotes = new ArrayList<Note>();
@@ -225,8 +232,11 @@ public abstract class SyncService {
 	}
 
 	
-	// syncing with remote changes
-	protected void prepareSyncableNotes(ArrayList<Note> notesList) {
+	/**syncing with remote changes
+		robotman3000: This perfoms a sync using all the notes on REMOTE
+	 @param notesList A list of all the notes on remote
+	 */
+	protected void prepareSyncableNotes(List<Note> notesList) {
 
 		remoteGuids = new ArrayList<String>();
 		pushableNotes = new ArrayList<Note>();

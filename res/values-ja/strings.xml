@@ -392,4 +392,5 @@
   Koichi Akabe https://launchpad.net/~vbkaisetsu
   Stefan Hammer https://launchpad.net/~j-4
   vine_user https://launchpad.net/~vineuser</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

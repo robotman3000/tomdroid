@@ -425,4 +425,5 @@
 	<string name="messageSshConnectionStringExample">user@server.org:22/path/to/notes</string>
 	<string name="messageTry">Try: %1$s.</string>
 	<string name="messageSshLock">Server locked. Another client is synchronizing at the moment. Try again later.</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

@@ -390,4 +390,5 @@
 	<!-- Launchpad Translation String -->
 	<string name="about_translators">Launchpad Contributions:
   Maiko Mõtsar https://launchpad.net/~daddo</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

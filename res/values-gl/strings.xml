@@ -391,4 +391,5 @@
 	<string name="about_translators">Launchpad Contributions:
   Roberto DzAl https://launchpad.net/~roberdzal
   ghas https://launchpad.net/~agghas</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

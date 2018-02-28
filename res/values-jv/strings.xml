@@ -393,4 +393,5 @@
 	translator-credits
 	
 	</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

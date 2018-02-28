@@ -399,4 +399,5 @@
   Stefan Hammer https://launchpad.net/~j-4
   Валерий Рябошапко https://launchpad.net/~valera-m
   Устин https://launchpad.net/~ustinershovskiy</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

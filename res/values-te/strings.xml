@@ -390,4 +390,5 @@
 	<!-- Launchpad Translation String -->
 	<string name="about_translators">Launchpad Contributions:
   Praveen Illa https://launchpad.net/~telugulinux</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

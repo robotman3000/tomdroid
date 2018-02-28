@@ -391,4 +391,5 @@
 	<string name="about_translators">Launchpad Contributions:
   Ajda Marić https://launchpad.net/~ajda-maric
   Eldina Turajlić https://launchpad.net/~eldina-turajlic</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

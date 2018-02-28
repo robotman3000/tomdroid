@@ -390,4 +390,5 @@
 	<!-- Launchpad Translation String -->
 	<string name="about_translators">Launchpad Contributions:
   Blagovest Petrov https://launchpad.net/~eniac-bg</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

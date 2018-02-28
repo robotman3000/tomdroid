@@ -390,4 +390,5 @@
 	<!-- Launchpad Translation String -->
 	<string name="about_translators">Launchpad Contributions:
   Mikael Hiort af Ornäs https://launchpad.net/~lakritslemmel</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

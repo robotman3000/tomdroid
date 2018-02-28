@@ -391,4 +391,5 @@
 	<string name="about_translators">Launchpad Contributions:
   Jackseen Jeyaluck https://launchpad.net/~jackseen1988
   Stefan Hammer https://launchpad.net/~j-4</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

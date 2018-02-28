@@ -391,4 +391,5 @@
 	<string name="about_translators">Launchpad Contributions:
   Mohamed Rizmi https://launchpad.net/~mrizmi-deactivatedaccount
   wijesekara kankanamge udayangani https://launchpad.net/~wku1225</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

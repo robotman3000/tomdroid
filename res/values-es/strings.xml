@@ -402,4 +402,5 @@
   Lucio https://launchpad.net/~lucio-martinez
   Roberto DzAl https://launchpad.net/~roberdzal
   Stefan Hammer https://launchpad.net/~j-4</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

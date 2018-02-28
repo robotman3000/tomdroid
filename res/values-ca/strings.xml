@@ -393,4 +393,5 @@
   Antonio Vicién Faure https://launchpad.net/~antoniopolonio
   David Planella https://launchpad.net/~dpm
   Stefan Hammer https://launchpad.net/~j-4</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

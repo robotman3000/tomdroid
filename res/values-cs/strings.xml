@@ -392,4 +392,5 @@
 	<string name="about_translators">Launchpad Contributions:
   Jan Dolejš https://launchpad.net/~jackdown3csr
   Michal Cerman https://launchpad.net/~micer</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

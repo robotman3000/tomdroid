@@ -393,4 +393,5 @@
   Mikael Hiort af Ornäs https://launchpad.net/~lakritslemmel
   Stefan Hammer https://launchpad.net/~j-4
   stoft https://launchpad.net/~rasmus-larsson</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

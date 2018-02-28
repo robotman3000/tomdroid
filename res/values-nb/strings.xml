@@ -390,4 +390,5 @@
 	<!-- Launchpad Translation String -->
 	<string name="about_translators">Launchpad Contributions:
   Daniel Landsverk https://launchpad.net/~daniel-landsverk</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

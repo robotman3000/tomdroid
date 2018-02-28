@@ -396,4 +396,5 @@ Ve Açık Kaynak!!\n*Tomboy Çeviri Ekibi (Barış Özcan)</string>
   baris ozcan https://launchpad.net/~brsozcan
   kulkke https://launchpad.net/~kulkke
   zeugma https://launchpad.net/~sunder67</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

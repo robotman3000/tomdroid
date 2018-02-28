@@ -391,4 +391,5 @@
 	<string name="about_translators">Launchpad Contributions:
   Andri Thorlacius https://launchpad.net/~chipcius
   Sigurpáll Sigurðsson https://launchpad.net/~icekhaos</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

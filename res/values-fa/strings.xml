@@ -390,4 +390,5 @@
 	<!-- Launchpad Translation String -->
 	<string name="about_translators">Launchpad Contributions:
   Hamed Nemati https://launchpad.net/~hamed-nemati</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

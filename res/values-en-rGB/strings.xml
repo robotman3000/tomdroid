@@ -396,4 +396,5 @@
   Sid Roberts https://launchpad.net/~sidroberts
   Stefan Hammer https://launchpad.net/~j-4
   Vibhav Pant https://launchpad.net/~vibhavp</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>

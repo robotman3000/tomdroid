@@ -390,4 +390,5 @@
 	<!-- Launchpad Translation String -->
 	<string name="about_translators">Launchpad Contributions:
   Саша Петровић https://launchpad.net/~salepetronije</string>
+    <string name="prefDropboxSync">Dropbox Sync</string>
 </resources>
