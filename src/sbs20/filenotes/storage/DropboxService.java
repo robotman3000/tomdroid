@@ -128,7 +128,6 @@ public class DropboxService {
 
         if (this.isAuthenticated()) {
             Logger.verbose(this, "files():Authenticated");
-
             try {
                 ListFolderBuilder listFolderBuilder = client.files().listFolderBuilder("");
                 ListFolderResult result = listFolderBuilder.withRecursive(true).start();
@@ -316,8 +315,14 @@ public class DropboxService {
 
     public List<File> fetchNotes() {
         ArrayList<File> notes = new ArrayList<>();
+        List<FileMetadata> files = null;
+        try {
+            files = files();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (String guid : manifest.getNotes().keySet()){
-            File noteFile = fetchNote(guid.toString());
+            File noteFile = fetchNote(guid.toString(), files);
             if(noteFile != null) {
                 TLog.v(TAG, "fetchNotes: Note file was null! {0}", guid);
                 notes.add(noteFile);
@@ -337,19 +342,19 @@ public class DropboxService {
         manifest.setRevision(revision);
     }
 
-    public File fetchNote(String guid) {
+    public File fetchNote(String guid, List<FileMetadata> files) {
         TLog.v(TAG, "fetchNote(): {0}", guid);
         // Mock fetch
         /*Note note = new Note();
         note.setTitle(guid);
         return note;*/
-
         if(manifest.getNoteRevision(guid) > -1) {
-            List<FileMetadata> files = null;
-            try {
-                files = files();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(files == null) {
+                try {
+                    files = files();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             for (FileMetadata file : files) {
                 if (file.getPathLower().equals("/0/" + manifest.getNoteRevision(guid) + "/" + guid + ".note")) {

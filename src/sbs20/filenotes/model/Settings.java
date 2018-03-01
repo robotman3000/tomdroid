@@ -6,9 +6,6 @@ public class Settings {
 
     private SharedPreferences sharedPreferences;
 
-    public static final String CLOUD_SERVICE = "pref_cloud";
-    public static final String CLOUD_STORAGE_PATH = "pref_cloud_storage_directory";
-
     public static final String DROPBOX_ACCESS_TOKEN = "pref_dbx_access_token";
 
     public Settings(SharedPreferences sharedPreferences) {
@@ -33,10 +30,6 @@ public class Settings {
         this.sharedPreferences.edit().remove(key).commit();
     }
 
-    public String getCloudServiceName() {
-        return this.get(CLOUD_SERVICE, "none");
-    }
-
     public String getDropboxAccessToken() {
         return this.get(DROPBOX_ACCESS_TOKEN, null);
     }
@@ -50,7 +43,6 @@ public class Settings {
     }
 
     public String getRemoteStoragePath() {
-        //return this.get(CLOUD_STORAGE_PATH);
         return "/";
     }
 

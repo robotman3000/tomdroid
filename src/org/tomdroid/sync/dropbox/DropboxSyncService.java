@@ -211,7 +211,7 @@ public class DropboxSyncService extends SyncService {
                     dbx.login(activity);
 
                     //try {
-                        File noteFile = dbx.fetchNote(guid);
+                        File noteFile = dbx.fetchNote(guid, null);
                         if (noteFile != null) {
                             Note parsedNote = parseNote(noteFile, guid);
                             if(parsedNote != null) {
@@ -380,7 +380,6 @@ public class DropboxSyncService extends SyncService {
 
                     TLog.v(TAG, "pushing data to dropbox: {0}");
                     dbx.performSync();
-                    dbx.fetchManifest();
                     latestRemoteRevision = dbx.getRevision();
                     sendMessage(LATEST_REVISION,(int)latestRemoteRevision,0);
 

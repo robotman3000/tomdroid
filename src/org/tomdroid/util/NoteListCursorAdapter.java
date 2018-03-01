@@ -97,6 +97,10 @@ public class NoteListCursorAdapter extends SimpleCursorAdapter {
             if (note_modified != null) {
             	note_modified.setTextColor(0xFFFFFFFF);
             }
+            TextView note_notebook = (TextView) v.findViewById(R.id.note_notebook);
+            if (note_notebook != null) {
+                note_notebook.setTextColor(0xFFFFFFFF);
+            }
     		v.setBackgroundResource(R.drawable.drop_shadow_selected);
     		v.findViewById(R.id.triangle).setBackgroundResource(R.drawable.white_triangle);
     	}
@@ -113,7 +117,8 @@ public class NoteListCursorAdapter extends SimpleCursorAdapter {
             if (note_notebook != null) {
                 note_notebook.setTextColor(0xFF000000);
             }
-    		v.setBackgroundResource(0);
+            v.setBackgroundResource(R.drawable.drop_shadow);
+    		//v.setBackgroundResource(0);
     		v.findViewById(R.id.triangle).setBackgroundResource(0);
     	}
     	return v;
