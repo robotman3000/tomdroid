@@ -357,7 +357,7 @@ public class DropboxService {
                 }
             }
             for (FileMetadata file : files) {
-                if (file.getPathLower().equals("/0/" + manifest.getNoteRevision(guid) + "/" + guid + ".note")) {
+                if (file.getPathLower().equals(getNotePath(manifest.getNoteRevision(guid), guid))) {
                     try {
                         TLog.v(TAG, "note {0} found", guid);
                         File noteFile = download(file);
@@ -392,8 +392,9 @@ public class DropboxService {
             ByteArrayInputStream str = new ByteArrayInputStream(xmlOutput.getBytes());
             try {
                 manifest.incNoteRevision(note.getGuid());
-                TLog.v(TAG, "uploading note {0} to {1}", note.getGuid(), "0/" + manifest.getNoteRevision(note.getGuid()) + "/" + note.getGuid() + ".note");
-                upload("0/" + manifest.getNoteRevision(note.getGuid()) + "/" + note.getGuid() + ".note", str);
+                String notePath = getNotePath(manifest.getNoteRevision(note.getGuid()), note.getGuid());
+                TLog.v(TAG, "uploading note {0} to {1}", note.getGuid(), notePath);
+                upload(notePath, str);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -401,6 +402,7 @@ public class DropboxService {
 
         //DO: delete notes
         for (String guid : deletedNotes){
+	        TLog.v(TAG, "[Not] deleting note {0}", guid);
             //TODO: Actually delete the matching note from the server
         }
 
@@ -408,7 +410,7 @@ public class DropboxService {
         ByteArrayInputStream manifestStream = new ByteArrayInputStream(manifest.toXmlString().getBytes());
         try {
             // Note: the dual copies of the manifest is how the desktop tomboy client does things
-            upload("0/" + manifest.getRevision() + "/manifest.xml", manifestStream);
+            upload(getBaseFolderName(manifest.getRevision()) + "/" + manifest.getRevision() + "/manifest.xml", manifestStream);
             manifestStream.reset();
             upload("manifest.xml", manifestStream);
         } catch (Exception e) {
@@ -418,4 +420,16 @@ public class DropboxService {
         deletedNotes.clear();
         updatedNotes.clear();
     }
+
+	public String getBaseFolderName(long rev){
+		int index = 0;
+		while((index + 1) * 100 < rev){
+			index++;
+		}
+		return "/" + index;
+	}
+	
+	public String getNotePath(long noteRev, String guid){
+		return getBaseFolderName(noteRev) + "/" + manifest.getNoteRevision(guid) + "/" + guid + ".note";
+	}
 }
